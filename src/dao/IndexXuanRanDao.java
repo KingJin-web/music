@@ -1,10 +1,11 @@
-package com.yc.Dao;
+package dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Map;
 
-import com.yc.common.util.DBHelper;
+import common.util.DBHelper;
 
 public class IndexXuanRanDao {
 

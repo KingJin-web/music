@@ -19,17 +19,22 @@
 		window.location.href = 'https://m.sq688.com' + url;
 	}
 </script>
-<link rel="shortcut icon" type="image/ico" href="https://www.sq688.com/favicon.ico">
+<link rel="shortcut icon" type="image/ico"
+	href="https://www.sq688.com/favicon.ico">
 <meta name="applicable-device" content="pc">
 <meta name="mobile-agent" content="format=html5;url=https://m.sq688.com">
-<link rel="alternate" media="only screen and(max-width: 800px)" href="https://m.sq688.com/">
+<link rel="alternate" media="only screen and(max-width: 800px)"
+	href="https://m.sq688.com/">
 <title>SQ688.Com_无损音乐交流_FLAC_APE_WAV_DSD_超高无损音乐</title>
-<meta name="keywords" content="SQ688,无损音乐免费下载,无损音乐交流,超高无损音乐,WAV,FLAC,APE,DSD">
-<meta name="description" content="超高无损音乐网SQ688.Com收录大量无损音乐免费下载,提供华语男歌手,华语女歌手,华语乐队,专辑合集,欧美歌手等FLAC,WAV,DSD,APE格式无损音乐免费下载">
+<meta name="keywords"
+	content="SQ688,无损音乐免费下载,无损音乐交流,超高无损音乐,WAV,FLAC,APE,DSD">
+<meta name="description"
+	content="超高无损音乐网SQ688.Com收录大量无损音乐免费下载,提供华语男歌手,华语女歌手,华语乐队,专辑合集,欧美歌手等FLAC,WAV,DSD,APE格式无损音乐免费下载">
 <link rel="stylesheet" type="text/css" href="res/main.css">
 <link rel="stylesheet" type="text/css" href="res/font-awesome.css">
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script
+	src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 </head>
 <body>
 	<div id="header" class="header">
@@ -38,24 +43,26 @@
 				<h1>超高无损音乐</h1>
 				<p>SQ688.com</p>
 			</div>
-			<ul class="menu" >
-				<li><a href="index.html" class="cur">首页</a></li>
-				<li v-for="s in listtype">
-				<a :href=" 'singer.html#' +s.category">{{s.category}}</a>
-				</li>
-				
-			</ul>
 			<div class="users">
-				<a href="https://www.sq688.com/login"><i class="fa fa-sign-in"></i> 登录</a> / <a href="https://www.sq688.com/register"><i class="fa fa-registered"></i> 注册</a>
+				<a href="login.html"><i class="fa fa-sign-in"></i>登录</a> / <a
+					href="login.html"><i class="fa fa-registered"></i>注册</a>
 			</div>
+			<ul class="menu">
+				<li><a href="index.html" class="cur">首页</a></li>
+				<li v-for="s in listtype"><a
+					:href=" 'singer.html#' +s.category">{{s.category}}</a></li>
+
+			</ul>
+
 			<div class="clear"></div>
 		</div>
 		<div class="search-bar">
 			<div class="bar">
 				<div class="wrp">
-					<input  v-model="info" type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk"> 
-					<a :href="'Search.html#'+info" id="btn_search" class="bb">
-					<i class="fa fa-search"></i></a>
+					<input v-model="info" type="text" id="keyword"
+						placeholder="请输入歌曲名称或者歌手" class="kk"> <a
+						:href="'Search.html#'+info" id="btn_search" class="bb"> <i
+						class="fa fa-search"></i></a>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -76,7 +83,7 @@
 		}
 	});
 	</script>
-	
+
 	<div class="banner">
 		<div class="bg"></div>
 	</div>
@@ -84,17 +91,17 @@
 	<div class="hot">
 		<div class="wp">
 			<div class="lt">热门歌曲</div>
-			
+
 			<div class="rt">
 				<div class="item" v-for="s in list">
-					<ul class="lists" >
-						<li><a :href=" 'download.html?name='+(s.singer)+'#'+s.name" class="st">{{s.name}} 
-						<span class="dp">{{s.type}}</span> 
-						<span class="dp">{{s.size}}</span>
+					<ul class="lists">
+						<li><a :href=" 'download.html?name='+(s.singer)+'#'+s.name"
+							class="st">{{s.name}} <span class="dp">{{s.type}}</span> <span
+								class="dp">{{s.size}}</span>
 						</a> <a :href="'detail.html#' +s.singer" class="sn">{{s.singer}}</a></li>
 					</ul>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -117,7 +124,7 @@
 	</script>
 
 
-	
+
 	<!--
     <div style="padding-top:20px;background:#fff;">
         <div style="margin:0 auto;width:1164px; max-height:120px;border:1px solid #ebebeb; text-align:center;">
@@ -132,16 +139,18 @@
 	<div class="context">
 		<div class="sq">
 			<div class="qlist fit" v-for="(s,i) in xh">
-				<a :href=" 'singer.html#' " title="华语男歌手">
-				<img :src="'res/c'+(i+1)+'.jpg'"></a>
-				 	<ul  v-for="m in s">
-						<li><a :href="'download.html?name='+(list[m].singer)+
-						'#'+list[m].name" target="_blank" class="stitle">{{list[m].name}}</a>
-						<a href="https://www.sq688.com/detail/131.html" target="_blank" class="sname" v-show="i==3">{{list[m].members}} </a>
-						<a :href="'detail.html#' +list[m].singer" target="_blank" class="sname" v-show="i!=3">{{list[m].singer}}</a>
-						
-						</li>
-					</ul>
+				<a :href=" 'singer.html#' " title="华语男歌手"> <img
+					:src="'res/c'+(i+1)+'.jpg'"></a>
+				<ul v-for="m in s">
+					<li><a
+						:href="'download.html?name='+(list[m].singer)+
+						'#'+list[m].name"
+						target="_blank" class="stitle">{{list[m].name}}</a> <a
+						href="https://www.sq688.com/detail/131.html" target="_blank"
+						class="sname" v-show="i==3">{{list[m].members}} </a> <a
+						:href="'detail.html#' +list[m].singer" target="_blank"
+						class="sname" v-show="i!=3">{{list[m].singer}}</a></li>
+				</ul>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -165,8 +174,8 @@
 					});
 				}
 			});
-	</script> 
-	
+	</script>
+
 
 
 
@@ -183,10 +192,17 @@
 	</div>
 	<div class="footer">
 		<div class="warp">
-			Copyright 2015-2018 SQ688.com 超高无损音乐<br>本站所有数据均系网友搜集自互联网后分享,本站服务器不存储任何音乐文件,也无意侵犯您的版权,如若任何人声称是任何音乐的版权所有人,请联系sqshangwu@gmail.com,本站会尽快删除,<br>郑重声明本站旨在无损音乐交流分享,不与任何淘宝店铺或机构合作参与任何形式的获利行为,敬请网友注意谨防受骗! <br> 桂ICP备13001859号-4
+			Copyright 2015-2018 SQ688.com 超高无损音乐<br>本站所有数据均系网友搜集自互联网后分享,本站服务器不存储任何音乐文件,也无意侵犯您的版权,如若任何人声称是任何音乐的版权所有人,请联系sqshangwu@gmail.com,本站会尽快删除,<br>郑重声明本站旨在无损音乐交流分享,不与任何淘宝店铺或机构合作参与任何形式的获利行为,敬请网友注意谨防受骗!
+			<br> 桂ICP备13001859号-4
 			<script type="text/javascript" src="res/z_stat.php"></script>
 			<script src="res/core.php" charset="utf-8" type="text/javascript"></script>
-			<a href="https://www.cnzz.com/stat/website.php?web_id=1277751974" target="_blank" title="站长统计">站长统计</a> <br> 本站唯一QQ群(892306409)欢迎各大音乐爱好者加入 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=40edf9935a8deb7a8eeb6e93853111156fb280203fb799c7d11471aea22304fb"> <img border="0" src="res/group.png" alt="超高无损音乐|SQ688" title="超高无损音乐|SQ688"></a>
+			<a href="https://www.cnzz.com/stat/website.php?web_id=1277751974"
+				target="_blank" title="站长统计">站长统计</a> <br>
+			本站唯一QQ群(892306409)欢迎各大音乐爱好者加入 <a target="_blank"
+				href="https://shang.qq.com/wpa/qunwpa?idkey=40edf9935a8deb7a8eeb6e93853111156fb280203fb799c7d11471aea22304fb">
+				<img border="0" src="res/group.png" alt="超高无损音乐|SQ688"
+				title="超高无损音乐|SQ688">
+			</a>
 		</div>
 	</div>
 
@@ -194,9 +210,14 @@
 	<script type="text/javascript" src="res/vue.min.js"></script>
 	<script type="text/javascript" src="res/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="res/clipboard.js"></script>
-	<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+	<div class="xl-chrome-ext-bar"
+		id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}"
+		style="display: none;">
 		<div class="xl-chrome-ext-bar__logo"></div>
-		<a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a> <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+		<a id="xl_chrome_ext_download" href="javascript:;"
+			class="xl-chrome-ext-bar__option">下载视频</a> <a
+			id="xl_chrome_ext_close" href="javascript:;"
+			class="xl-chrome-ext-bar__close"></a>
 	</div>
 </body>
 </html>

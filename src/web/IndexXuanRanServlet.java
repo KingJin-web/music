@@ -1,6 +1,7 @@
-package com.yc.Web;
+package web;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yc.Dao.IndexXuanRanDao;
-import com.yc.Dao.SingerTypedao;
-import com.yc.common.web.BaseServlet;
+import dao.IndexXuanRanDao;
+import dao.SingerTypedao;
+import common.web.BaseServlet;
 
 @WebServlet("/xuanran.s")
 public class IndexXuanRanServlet extends BaseServlet{

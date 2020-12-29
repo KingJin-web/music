@@ -1,6 +1,7 @@
-package com.yc.Web;
+package web;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yc.Biz.LyBiz;
-import com.yc.Dao.DetailDao;
-import com.yc.Dao.DownLoadDao;
-import com.yc.Dao.LyDao;
-import com.yc.Dao.SearchDao;
-import com.yc.common.biz.BizException;
-import com.yc.common.web.BaseServlet;
+import  biz.LyBiz;
+import  dao.DetailDao;
+import  dao.DownLoadDao;
+import  dao.LyDao;
+import  dao.SearchDao;
+import  common.biz.BizException;
+import  common.web.BaseServlet;
 
 @WebServlet("/detail.s")
 public class DetailServelt  extends BaseServlet{

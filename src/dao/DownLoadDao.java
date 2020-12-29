@@ -1,10 +1,11 @@
-package com.yc.Dao;
+package dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Map;
 
-import com.yc.common.util.DBHelper;
+import common.util.DBHelper;
 
 public class DownLoadDao {
 
@@ -23,8 +24,8 @@ public class DownLoadDao {
 				"WHERE\n" +
 				"	a.singer = ?\n" +
 				"AND a. NAME = ?";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql, name,song);
+		
+		return DBHelper.selectListMap(sql, name,song);
 	}
 	
 	public List<Map<String, Object>> listdownloadzjsl() throws SQLException{
@@ -42,8 +43,8 @@ public class DownLoadDao {
 				"		singer\n" +
 				") c ON a. NAME = c.singer\n" +
 				"limit 66,6";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql);
+		
+		return DBHelper.selectListMap(sql);
 	
 	}
 }

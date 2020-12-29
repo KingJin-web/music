@@ -1,9 +1,9 @@
 package web;
 
 import bean.SqMember;
+
 import biz.UserBiz;
 import common.biz.BizException;
-import common.util.Utils;
 import common.web.BaseServlet;
 
 import javax.servlet.ServletException;
@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/user.do")
 public class UserServlet extends BaseServlet {
-    private final UserBiz biz = new UserBiz();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final UserBiz biz = new UserBiz();
 
     /**
      * 注册账号

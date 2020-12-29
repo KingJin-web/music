@@ -1,10 +1,11 @@
-package com.yc.Dao;
+package dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Map;
 
-import com.yc.common.util.DBHelper;
+import common.util.DBHelper;
 
 public class DetailDao {
 
@@ -24,27 +25,27 @@ public class DetailDao {
 				") c ON a. NAME = c.singer\n" +
 				"WHERE\n" +
 				"	name = ?";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql, name);
+		 
+		return DBHelper.selectListMap(sql, name);
 		
 	}
 	
 	public List<Map<String, Object>> listsong(String singer) throws SQLException{
 		String sql="select * from sq_song where singer=?";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql, singer);
+		 
+		return DBHelper.selectListMap(sql, singer);
 		
 	}
 	public List<Map<String, Object>> listzjsl() throws SQLException{
 		String sql="select * from sq_song limit 52,8";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql);
+		 
+		return DBHelper.selectListMap(sql);
 		
 	}
 	public List<Map<String, Object>> listzjgx() throws SQLException{
 		String sql="select * from sq_singer limit 38,10";
-		DBHelper dbh=new DBHelper();
-		return dbh.selectListMap(sql);
+		 
+		return DBHelper.selectListMap(sql);
 		
 	}
 	
