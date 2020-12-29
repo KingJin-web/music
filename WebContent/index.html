@@ -53,7 +53,9 @@
 		<div class="search-bar">
 			<div class="bar">
 				<div class="wrp">
-					<input type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk"> <a href="javascript:;" id="btn_search" class="bb"><i class="fa fa-search"></i></a>
+					<input  v-model="info" type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk"> 
+					<a :href="'Search.html#'+info" id="btn_search" class="bb">
+					<i class="fa fa-search"></i></a>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -64,6 +66,7 @@
 		el:".header",
 		data:{
 			listtype:[],
+			info:"",
 			
 		},
 		created(){
@@ -85,8 +88,10 @@
 			<div class="rt">
 				<div class="item" v-for="s in list">
 					<ul class="lists" >
-						<li><a href="https://www.sq688.com/download/15707.html" class="st">{{s.name}} <span class="dp">{{s.type}}</span> <span class="dp">{{s.size}}</span>
-						</a> <a href="https://www.sq688.com/detail/261.html" class="sn">{{s.singer}}</a></li>
+						<li><a :href=" 'download.html?name='+(s.singer)+'#'+s.name" class="st">{{s.name}} 
+						<span class="dp">{{s.type}}</span> 
+						<span class="dp">{{s.size}}</span>
+						</a> <a :href="'detail.html#' +s.singer" class="sn">{{s.singer}}</a></li>
 					</ul>
 				</div>
 				
@@ -127,12 +132,13 @@
 	<div class="context">
 		<div class="sq">
 			<div class="qlist fit" v-for="(s,i) in xh">
-				<a href="https://www.sq688.com/singer/10001.html" title="华语男歌手">
+				<a :href=" 'singer.html#' " title="华语男歌手">
 				<img :src="'res/c'+(i+1)+'.jpg'"></a>
 				 	<ul  v-for="m in s">
-						<li><a href="https://www.sq688.com/download/24562.html" target="_blank" class="stitle">{{list[m].name}}</a>
+						<li><a :href="'download.html?name='+(list[m].singer)+
+						'#'+list[m].name" target="_blank" class="stitle">{{list[m].name}}</a>
 						<a href="https://www.sq688.com/detail/131.html" target="_blank" class="sname" v-show="i==3">{{list[m].members}} </a>
-						<a href="https://www.sq688.com/detail/131.html" target="_blank" class="sname" v-show="i!=3">{{list[m].singer}}</a>
+						<a :href="'detail.html#' +list[m].singer" target="_blank" class="sname" v-show="i!=3">{{list[m].singer}}</a>
 						
 						</li>
 					</ul>
