@@ -1,11 +1,11 @@
 package dao;
 
-import java.sql.SQLException;
+import common.util.DBHelper;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import common.util.DBHelper;
 
 public class IndexXuanRanDao {
 
@@ -120,6 +120,18 @@ public class IndexXuanRanDao {
 	}
 	public List<Map<String, Object>> Listhuazj() throws SQLException{
 		String sql="select * from sq_singer  where category='专辑合集'  limit 0,12";
+		return DBHelper.selectListMap(sql);
+	}
+	
+	
+	public List<Map<String, Object>> Listshare() throws SQLException{
+		String sql="SELECT\n" +
+				"	*\n" +
+				"FROM\n" +
+				"	sq_share\n" +
+				"LEFT JOIN sq_member ON sq_share.member = sq_member. NAME\n" +
+				"LIMIT 0,\n" +
+				" 18";
 		return DBHelper.selectListMap(sql);
 	}
 	

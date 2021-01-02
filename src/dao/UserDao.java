@@ -1,11 +1,13 @@
 package dao;
 
 import bean.SqMember;
+import bean.SqShare;
 import common.util.DBHelper;
 import common.util.Utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDao {
 
@@ -73,5 +75,22 @@ public class UserDao {
     public void updateById(SqMember sqMember) throws SQLException {
         String sql = "update sq_member set nickname = ? , phone=? , email =? , qq=? where id = ?";
         DBHelper.update(sql, sqMember.getNickname(), sqMember.getPhone(), sqMember.getEmail(), sqMember.getQq(), sqMember.getId());
+    }
+
+    public void insertShare(SqShare sqShare) throws SQLException {
+
+        String sql = "INSERT INTO `sq_share` VALUES (null, ?, ?, ?, ?, " +
+                "?, ?, ?, 999, ?, " +
+                "?, now(),null);";
+        DBHelper.update(sql, sqShare.getName(), sqShare.getSingers(), sqShare.getType(), sqShare.getTags(),
+                sqShare.getSrcType(), sqShare.getFormat(), sqShare.getIntro(), sqShare.getDownUrl(),
+                sqShare.getMember()
+        );
+
+    }
+
+    public List<SqShare> selectShareByUserName(String name) throws SQLException {
+        String sql = "select * from sq_share where member =?";
+        return DBHelper.selectListBean(sql, SqShare.class, name);
     }
 }

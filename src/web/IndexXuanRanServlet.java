@@ -1,7 +1,11 @@
 package web;
 
-import java.io.IOException;
+import common.web.BaseServlet;
+import dao.IndexXuanRanDao;
+import dao.ShareDao;
+import dao.SingerTypedao;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -10,17 +14,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.IndexXuanRanDao;
-import dao.SingerTypedao;
-import common.web.BaseServlet;
+
 
 @WebServlet("/xuanran.s")
-public class IndexXuanRanServlet extends BaseServlet{
+public class IndexXuanRanServlet extends BaseServlet {
 
 private static final long serialVersionUID = 1L;
 	
 	private IndexXuanRanDao id=new IndexXuanRanDao();
 	private SingerTypedao std=new SingerTypedao();
+	private ShareDao sd=new ShareDao();
 	public void queryzuixing(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try {
 			write(response, id.Listzuixing());
@@ -87,6 +90,79 @@ private static final long serialVersionUID = 1L;
 		String category=request.getParameter("category");
 		try {
 			write(response, std.queryall(category));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void queryshare(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, id.Listshare());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share_item
+	 * @param request
+	 * @param response
+	 */
+	public void querysharedetail(HttpServletRequest request,HttpServletResponse response) {
+		String name=request.getParameter("name");
+		String singers=request.getParameter("singers");
+		try {
+			write(response, sd.listshare(name, singers));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share页
+	 * @param request
+	 * @param response
+	 */
+	public void querysharedetails(HttpServletRequest request,HttpServletResponse response) {
+		String page=request.getParameter("page");
+		int ipage=page .equals("NaN")? 1:Integer.parseInt(page);
+		try {
+			write(response, sd.listsharedetail(ipage));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share排行
+	 * @param request
+	 * @param response
+	 */
+	public void queryshareph(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listph());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 网友分享cnt总条数
+	 * @param request
+	 * @param response
+	 */
+	public void queryall(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listall());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share_item页热门资源
+	 * @param request
+	 * @param response
+	 */
+	
+	public void queryrmzy(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listrmzy());
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}

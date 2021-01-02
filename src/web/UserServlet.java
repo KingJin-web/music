@@ -1,7 +1,7 @@
 package web;
 
 import bean.SqMember;
-
+import bean.SqShare;
 import biz.UserBiz;
 import common.biz.BizException;
 import common.web.BaseServlet;
@@ -15,11 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/user.do")
 public class UserServlet extends BaseServlet {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final UserBiz biz = new UserBiz();
+    private final UserBiz biz = new UserBiz();
 
     /**
      * 注册账号
@@ -105,7 +101,7 @@ public class UserServlet extends BaseServlet {
         String name = String.valueOf(req.getSession().getAttribute("name"));
         //如果session 为空 转为string 则是“null” 字符串 而不是 null
         System.out.println(name);
-        if (name == "null" ||  name.equals("null")) {
+        if (name == "null" || name.equals("null")) {
             write(resp, "请先登录 !");
             return;
         }
@@ -130,4 +126,43 @@ public class UserServlet extends BaseServlet {
             write(resp, e.getMessage());
         }
     }
+
+    //http://localhost:8080/C91_S2_music_war_exploded/user.do?op=userShare&title=
+    public void userShare(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqShare sqShare = new SqShare();
+        sqShare.setMember(req.getParameter("member"));
+        sqShare.setName(req.getParameter("title"));//标题/歌曲名/专辑名
+        sqShare.setSingers(req.getParameter("singer"));//歌手, 群星
+        sqShare.setTags(req.getParameter("tags"));//请填写分类标签(如周杰伦,无损,WAV)
+        sqShare.setType(req.getParameter("category"));//类型: 单曲,专辑,合集
+        sqShare.setSrcType(req.getParameter("clazz"));//资源类型:分轨,全轨
+        sqShare.setFormat(req.getParameter("type"));//格式: FLAC,WAV,DSD,APE
+        sqShare.setIntro(req.getParameter("des"));//详细介绍
+        sqShare.setDownUrl(req.getParameter("links"));//下载地址
+        System.out.println(sqShare);
+        try {
+            biz.addShare(sqShare);
+            write(resp, "修改成功 !");
+        } catch (BizException e) {
+            e.printStackTrace();
+            write(resp, e.getMessage());
+        }
+
+    }
+
+    public void queryShare(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = String.valueOf(req.getSession().getAttribute("name"));
+        //如果session 为空 转为string 则是“null” 字符串 而不是 null
+        System.out.println(name);
+        if (name == "null" || name.equals("null")) {
+            write(resp, "请先登录 !");
+            return;
+        }
+        write(resp, biz.queryShareByName(name));
+
+
+    }
+
+
+
 }

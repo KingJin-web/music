@@ -1,15 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="res/push.js"></script>
-    <script type="text/javascript">
-        if (/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i
-            .test(navigator.userAgent)) {
-            var url = window.location.pathname + window.location.search;
-            window.location.href = 'https://m.sq688.com' + url;
-        }
-    </script>
     <link rel="shortcut icon" type="image/ico" href="https://www.wuzhaoqi.top/web/favicon.ico">
     <meta name="applicable-device" content="pc">
     <meta name="mobile-agent" content="format=html5;url=https://m.sq688.com/my">
@@ -23,6 +16,10 @@
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="js/axios.js"></script>
     <script type="text/javascript" src="js/Popup.js"></script>
+    <script type='text/javascript' src='layui/layui.all.js'></script>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+
 </head>
 <body>
 
@@ -33,7 +30,7 @@
                 <h1>超高无损音乐</h1>
             </div>
             <ul class="menu">
-                <li><a href="index.html" class="cur">首页</a></li>
+                <li><a href="https://www.sq688.com/" class="cur">首页</a></li>
                 <li><a href="https://www.sq688.com/singer/10001.html">华语男歌手</a></li>
                 <li><a href="https://www.sq688.com/singer/10002.html">华语女歌手</a></li>
                 <li><a href="https://www.sq688.com/singer/10003.html">华语乐队</a></li>
@@ -55,14 +52,15 @@
         <div class="search-bar">
             <div class="bar">
                 <div class="wrp">
-                    <input type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk">
-                    <a href="javascript:;" id="btn_search" class="bb">
+                    <label for="keyword"></label><input type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk">
+                    <a href="" id="btn_search" class="bb">
                         <i class="fa fa-search"></i></a>
                     <div class="clear"></div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="member" class="member">
         <div class="m-left">
             <div class="top">
@@ -89,34 +87,27 @@
         <div class="m-right">
             <div class="cts">
                 <div class="add">
-                    <button class="btn-save" onclick="alertShare()">分享音乐</button>
+                    <button class="btn-save" onclick="function gotoShare() {
+                       window.location.href = 'myshares.html';
+                    }
+                    gotoShare()">分享音乐
+                    </button>
                 </div>
-                <table class="shr">
+                <table class="shr" id="list">
                     <tbody>
                     <tr>
                         <th>标题</th>
+                        <th>歌手名</th>
                         <th>发布时间</th>
-                        <th>状态</th>
-                        <th>赞</th>
+                        <th>热度</th>
                         <th>操作</th>
                     </tr>
-                    <tr>
-                        <td>
-                            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
-                                    src="//music.163.com/outchain/player?type=2&id=400876320&auto=1&height=66"></iframe>
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
+                    <tr v-for="share in shares">
+                        <td v-text="share.name"></td>
+                        <td v-text="share.singers"></td>
+                        <td v-text="share.createTime"></td>
+                        <td v-text="share.heat"></td>
+                        <td v-html="htmls"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -126,16 +117,17 @@
                 </div>
             </div>
         </div>
+
     </div>
-
-
     <div style="text-align:center;clear:both;margin-top:250px">
 
     </div>
+
     <div class="footer">
         <div class="warp">
-            Copyright 2015-2020 超高无损音乐<a href="https://beian.miit.gov.cn/#/Integrated/index">
-            <span>湘ICP备2020019542号-1</span></a><br>
+            Copyright 2015-2020 超高无损音乐<br>
+            <a href="https://beian.miit.gov.cn/#/Integrated/index">
+                <span>湘ICP备2020019542号-1</span></a><br>
         </div>
     </div>
 
@@ -143,9 +135,23 @@
 
 
 <script type="text/javascript">
-    var na = new Vue({
+
+    const na = new Vue({
         el: "#main",
         data: {
+            shares: [],
+            htmls: '<div class="layui-btn-group">\n' +
+                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
+                '    <i class="layui-icon" >&#xe615;</i>\n' +
+                '  </button>\n' +
+                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
+                '    <i class="layui-icon">&#xe642;</i>\n' +
+                '  </button>\n' +
+                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
+                '    <i class="layui-icon">&#xe640;</i>\n' +
+                '  </button>\n' +
+                '  </button>\n' +
+                '</div>',
             user: {
                 id: 0,
                 name: "",
@@ -161,16 +167,24 @@
             }
         },
         created() {
-            var url = "user.do?op=queryUser"
-            axios.get(url).then((res) => {
+            const url1 = "user.do?op=queryUser";
+            axios.get(url1).then((res) => {
                 if (res.data === "请先登录 !") {
                     gotoLogin();
                 }
                 this.user = res.data;
+                console.log(this.user)
+            });
+
+            const url2 = "user.do?op=queryShare";
+            axios.get(url2).then((res) => {
+                console.log(res.data)
+                this.shares = res.data;
             });
         },
 
-    })
+    });
 </script>
 </body>
+
 </html>

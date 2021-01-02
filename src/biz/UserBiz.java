@@ -1,6 +1,7 @@
 package biz;
 
 import bean.SqMember;
+import bean.SqShare;
 import common.biz.BizException;
 import common.util.EmailHelper;
 import common.util.Utils;
@@ -9,6 +10,7 @@ import dao.UserDao;
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserBiz {
     private final UserDao userDao = new UserDao();
@@ -27,8 +29,9 @@ public class UserBiz {
 
     /**
      * 发送验证码
+     *
      * @param email 收件人
-     * @param name 用户名
+     * @param name  用户名
      * @param vcode 验证码
      * @throws BizException
      */
@@ -87,7 +90,6 @@ public class UserBiz {
     }
 
 
-
     /**
      * 修改用户信息
      *
@@ -104,5 +106,28 @@ public class UserBiz {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addShare(SqShare sqShare) throws BizException {
+
+        Utils.checkNull(sqShare.getName(), "请填写歌曲名");
+        Utils.checkNull(sqShare.getSingers(), "请填写歌手名");
+        Utils.checkNull(sqShare.getDownUrl(), "请填写下载地址");
+
+        try {
+            userDao.insertShare(sqShare);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<SqShare> queryShareByName(String name) {
+        try {
+            return userDao.selectShareByUserName(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
