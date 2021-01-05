@@ -2,43 +2,38 @@
 // document.write('<link type="text/css" href="dist/dialog.css" rel="stylesheet">')
 document.write("<script type='text/javascript' src='layer/layer.js'></script>");
 document.write("<script type='text/javascript' src='js/jquery-3.5.1.js'></script>");
-document.write("<script type='text/javascript' src='layui/layui.all.js'></script>");
+document.write("<script type='text/javascript' src='layui/layui.js'></script>");
 document.write("<script type='text/javascript' src='js/vue.js'></script>");
 document.write('<link rel="stylesheet" href="layui/css/layui.css"  media="all">');
+document.write('<script type="text/javascript" src="layui/lay/modules/form.js"></script>')
 
-//
-// function myAlert(text) {
-//     Dialog.init('<p style=" margin:8px 0;width:100%;padding:11px 8px;font-size:15px; solid #999;">' + text + '</p>', {
-//         title: '提示',
-//         button: {
-//             确定: function () {
-//                 Dialog.close(this);
-//
-//             },
-//             取消: function () {
-//                 Dialog.close(this);
-//             }
-//         },
-//         time: 3000,
-//     });
-// }
+function changeShare_() {
+    layer.open({
+        type: 2
+        , title: '添加用户'
+        , content: 'usershare.html'
+        , maxmin: true
+        , area: ['500px', '450px']
+        , btn: ['确定', '取消']
+        , yes: function (index, layero) {
+            var iframeWindow = window['layui-layer-iframe' + index],
+                submitID = 'LAY-user-front-submit',
+                submit = layero.find('iframe').contents().find('#' + submitID);
+            //监听提交
+            iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+                var field = data.field; //获取提交的字段
 
-// function myAlert(text, path, success) {
-//     Dialog.init('<p style=" margin:8px 0;width:100%;padding:11px 8px;font-size:15px; solid #999;">' + text + '</p>', {
-//         title: '提示',
-//         button: {
-//             确定: function () {
-//                 if (text === success) {
-//                     window.location.href = path;
-//                 }
-//                 Dialog.close(this);
-//             },
-//             取消: function () {
-//                 Dialog.close(this);
-//             }
-//         },
-//     });
-// }
+                //提交 Ajax 成功后，静态更新表格中的数据
+                $.ajax({});
+                table.reload('LAY-user-front-submit'); //数据刷新
+                layer.close(index); //关闭弹层
+            });
+
+            submit.trigger('click');
+        }
+    });
+}
+
 
 function alertMy(text) {
     if (text.includes("成功")) {
@@ -53,6 +48,19 @@ function alertMy(text) {
         })
     }
 }
+
+function alertDelete() {
+    layer.confirm('您真的要删除这首歌曲吗？', {
+        icon: 0,
+        skin: 'layui-layer-lan',
+        btn: ['确认', '取消'] //按钮
+    }, function () {
+        alert("删除成功");
+    }, function () {
+        layer.close(index)
+    });
+}
+
 
 /**
  * 如果没有登录
@@ -124,18 +132,10 @@ function alertSave2(text) {
     }
 }
 
-function alertShare() {
-    // var pass;
-    // layer.prompt({title: '输入任何口令，并确认', formType: 1}, function (pass, index) {
-    //     layer.close(index);
-    //     layer.prompt({title: '随便写点啥，并确认', formType: 2}, function (text, index) {
-    //         layer.close(index);
-    //         layer.msg('演示完毕！您的口令：' + pass + '<br>您最后写下了：' + text);
-    //     });
-    // });
+function aaa() {
     layer.open({
         type: 1,
-        title: "分享歌曲",
+        title: "修改密码",
         closeBtn: 1,
         shadeClose: true,
         isOutAnim: true,
@@ -146,53 +146,69 @@ function alertShare() {
         btnAlign: 'c',
         moveType: 1,//拖拽模式，0或者1
 
-        content:  '<div id="layuiMy">' +
-            '<form class="layui-form">'+
-            '<div class="layui-form-item">' +
-            '    <label class="layui-form-label">标题/歌曲名/专辑名</label>' +
-            '    <div class="layui-input-block">' +
-            '      <input type="text" name="tname" v-model="tname"  required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">\n' +
-            '    </div>' +
-            ' </div>' +
-            '<textarea name="" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>' +
-            '<button class="layui-btn" @click="print" lay-submit lay-filter="formDemo">立即提交</button>' +
-            '</form>'+
-
-            '</div>' +
-            '<script type="text/javascript">' +
-            ' var vue = new Vue({\n' +
-            '                el: "#layuiMy",\n' +
-            '                data: {\n' +
-            '                    tname: "",\n' +
-            '                },\n' +
-            '                methods: {\n' +
-            '                    print(){\n' +
-            '                        console.log(this.tname)\n' +
-            '                    }\n' +
-            '                }\n' +
+        content: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"\n' +
+            '        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n' +
+            '<html xmlns="http://www.w3.org/1999/xhtml" lang="">\n' +
+            '<head>\n' +
+            '    <meta http-equiv="Content-Type" content="textml; charset=utf-8"/>\n' +
             '\n' +
-            '            })' +
-            '</script>',
+            '    <title>Zero Clipboard Test</title>\n' +
+            '    <script src="js/jquery-3.5.1.js"></script>\n' +
+            '    <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>\n' +
+            '    <script type="text/javascript">\n' +
+            '        function generateQRCode(rendermethod, picwidth, picheight, url) {\n' +
+            '            $("#qrcode").qrcode({\n' +
+            '                render: rendermethod, // 渲染方式有table方式（IE兼容）和canvas方式\n' +
+            '                width: picwidth, //宽度 \n' +
+            '                height: picheight, //高度 \n' +
+            '                text: utf16to8(url), //内容 \n' +
+            '                typeNumber: -1,//计算模式\n' +
+            '                correctLevel: 2,//二维码纠错级别\n' +
+            '                background: "#ffffff",//背景颜色\n' +
+            '                foreground: "#000000"  //二维码颜色\n' +
+            '\n' +
+            '            });\n' +
+            '        }\n' +
+            '\n' +
+            '        function init() {\n' +
+            'console.log("===================")' +
+            '            generateQRCode("table", 200, 200, "ss");\n' +
+            '        }\n' +
+            '\n' +
+            '        //中文编码格式转换\n' +
+            '        function utf16to8(str) {\n' +
+            '            var out, i, len, c;\n' +
+            '            out = "";\n' +
+            '            len = str.length;\n' +
+            '            for (i = 0; i < len; i++) {\n' +
+            '                c = str.charCodeAt(i);\n' +
+            '                if ((c >= 0x0001) && (c <= 0x007F)) {\n' +
+            '                    out += str.charAt(i);\n' +
+            '                } else if (c > 0x07FF) {\n' +
+            '                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));\n' +
+            '                    out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));\n' +
+            '                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));\n' +
+            '                } else {\n' +
+            '                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));\n' +
+            '                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));\n' +
+            '                }\n' +
+            '            }\n' +
+            '            return out;\n' +
+            '        }\n' +
+            '\n' +
+            '    </script>\n' +
+            '\n' +
+            '<body>\n' +
+            '<!--<script type="text/javascript" src="js/Popup.js"></script>-->\n' +
+            '<!--&lt;!&ndash;<button onclick="aaa()" style="height: 500px">aaaa</button><br>&ndash;&gt;-->\n' +
+            '<!--<button onclick="aaa()">Qrcode</button>-->\n' +
+            '<div id="qrcode" ></div>\n' +
+            '</body>\n' +
+            '</html>\n',
 
-            
-        success: function (layero, index) {
 
-
-            // var vue = new Vue({
-            //     el: "#layuiMy",
-            //     data: {
-            //         tname: "",
-            //     },
-            //     methods: {
-            //         print(){
-            //             console.log(this.tname)
-            //         }
-            //     }
-            //
-            // })
-
-        }
     });
+
 
 }
 
@@ -258,10 +274,117 @@ function changePwd() {
 
 }
 
+
+function alertAdv4() {
+    layer.open({
+        type: 1,
+        shade: false,
+        title: false, //不显示标题
+        content: '\t\t<h1>安卓,苹果,Mac,Windows 好用的加速器</h1>\n' +
+            '\t\t<h3>刷INS、访推特，完美支持高清1080P视频，无任何流量限制,真正免费的加速器</h3>\n' +
+            '\t\t<a href="https://invited.antss002.com/aff/uXAP">立即前往</a>', //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+        cancel: function () {
+            layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon: 6});
+        }
+    });
+}
+
+function alertMyVip() {
+    console.log("====================\n===== 这是广告 会员看不到的======================\n=======");
+
+    var i = Math.floor(Math.random() * 4);
+    if (i == 1) {
+        alertAdv1();
+    } else if (i == 2) {
+        alertAdv2();
+    } else if (i == 3) {
+        alertAdv3();
+    } else {
+        alertAdv4();
+    }
+
+
+}
+
+function alertAdv3() {
+
+    layer.open({
+        type: 0
+        ,
+        title: false //不显示标题栏
+        ,
+        closeBtn: false
+        ,
+        area: '200px;'
+        ,
+        shade: 0
+        ,
+        id: 'LAY_layuipro1' //设定一个id，防止重复弹出
+        ,
+        resize: false
+        ,
+        btn: ['前去', '残忍拒绝']
+        ,
+        btnAlign: 'c'
+        ,
+        moveType: 1 //拖拽模式，0或者1
+        ,
+        content: '<h1>PayPal</h1>\n' +
+            '\t\t<h3>一个账户，收款全球。0费用开户，享卖家保障，赢逾2亿用户。</h3>\n' +
+            '\t\t<p>PayPal</p>',
+        success: function (layero) {
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+                href: 'https://www.paypal.com/c2/webapps/mpp/account-selection?locale.x=zh_c2&pid=267417219&dclid=&gclid=EAIaIQobChMI8OG2xKiE7gIVCB68Ch3_OwbiEAEYASAAEgIZWfD_BwE'
+                , target: '_blank'
+            });
+        }
+    });
+}
+
+//左上角弹广告
+function alertAdv2() {
+    console.log("====================\n===== 这是广告 会员看不到的======================\n=======");
+
+    layer.open({
+        type: 0
+        ,
+        offset: 'lt',
+
+        title: '广告' //不显示标题栏
+        ,
+        closeBtn: false
+        ,
+        area: '200px;'
+        ,
+        shade: 0.1
+        ,
+        id: 'LAY_layuipro1' //设定一个id，防止重复弹出
+        ,
+        resize: false
+        ,
+        btn: ['前去充值', '残忍拒绝']
+        ,
+        btnAlign: 'c'
+        ,
+        moveType: 1 //拖拽模式，0或者1
+        ,
+        content: '<h1>会员超值特惠 </h1> <p>三个月会员只需要20元</p><br>'
+        ,
+        success: function (layero) {
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+                href: 'Recharge.html'
+                , target: '_blank'
+            });
+        }
+    });
+}
+
 /**
  * 弹出式广告
  */
-function alertAdv() {
+function alertAdv1() {
     layer.open({
         type: 1
         ,
@@ -294,4 +417,40 @@ function alertAdv() {
             });
         }
     });
+
 }
+
+
+//
+// function myAlert(text) {
+//     Dialog.init('<p style=" margin:8px 0;width:100%;padding:11px 8px;font-size:15px; solid #999;">' + text + '</p>', {
+//         title: '提示',
+//         button: {
+//             确定: function () {
+//                 Dialog.close(this);
+//
+//             },
+//             取消: function () {
+//                 Dialog.close(this);
+//             }
+//         },
+//         time: 3000,
+//     });
+// }
+
+// function myAlert(text, path, success) {
+//     Dialog.init('<p style=" margin:8px 0;width:100%;padding:11px 8px;font-size:15px; solid #999;">' + text + '</p>', {
+//         title: '提示',
+//         button: {
+//             确定: function () {
+//                 if (text === success) {
+//                     window.location.href = path;
+//                 }
+//                 Dialog.close(this);
+//             },
+//             取消: function () {
+//                 Dialog.close(this);
+//             }
+//         },
+//     });
+// }

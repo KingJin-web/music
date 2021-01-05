@@ -15,6 +15,14 @@
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="js/Popup.js"></script>
+    <script type="text/javascript">
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
+
+            //…
+        });
+    </script>
 </head>
 <body>
 <div id="main">
@@ -22,42 +30,48 @@
         <div class="warp">
             <div class="logo">
                 <h1>超高无损音乐</h1>
-                <p>wuzhaoqi.top</p>
             </div>
-            <ul class="menu" >
-			<li><a href="index.html" class="cur">首页</a></li>
-			<li v-show="i<6" v-for="(s,i) in listtype">
-				<a  :href=" 'singer.html#' +s.category">{{s.category}}</a>
-			</li>
-			<li v-show="i==6" v-for="(m,i) in listtype">
-				<a  href=" share.html">{{m.category}}</a>
-			</li>
-			<li v-show="i==7" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/yx/ ">{{s.category}}</a>
-			</li>
-			<li v-show="i==8" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/software/ ">{{s.category}}</a>
-			</li>
-		</ul>
+            <ul class="menu">
+                <li><a href="index.html" class="cur">首页</a></li>
+                <li>
+                    <a href="http://www.wuzhaoqi.top:8080/C91-S2-XM/singer.html#%E5%8D%8E%E8%AF%AD%E7%94%B7%E6%AD%8C%E6%89%8B">华语男歌手</a>
+                </li>
+                <li>
+                    <a href="http://www.wuzhaoqi.top:8080/C91-S2-XM/singer.html#%E5%8D%8E%E8%AF%AD%E5%A5%B3%E6%AD%8C%E6%89%8B">华语女歌手</a>
+                </li>
+                <li><a href="http://www.wuzhaoqi.top:8080/C91-S2-XM/singer.html#%E5%8D%8E%E8%AF%AD%E4%B9%90%E9%98%9F">华语乐队</a>
+                </li>
+                <li><a href="http://www.wuzhaoqi.top:8080/C91-S2-XM/singer.html#%E6%AC%A7%E7%BE%8E%E6%AD%8C%E6%89%8B">欧美歌手</a>
+                </li>
+                <li><a href="https://www.sq688.com/singer/10006.html">日韩歌手</a></li>
+                <li><a href="https://www.sq688.com/singer/10004.html">专辑合集</a></li>
+                <li><a href="https://www.sq688.com/share.html">网友分享</a></li>
+            </ul>
             <div class="users">
-                <p>
-                    <a href="member.html" style="color: rgb(33, 127, 188);" v-text="user.nickname"><i
-                            class="fa fa-user"></i>
-                    </a>欢迎回来
-                </p>
+                    <ul class="layui-nav">
+                        <li class="layui-nav-item">
+                            <a href=""><img :src="user.head" class="layui-nav-img"></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="member.html" style="color: #0C0C0C">个人中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+                                <dd><a href="vip.html" style="color: #0C0C0C">会员中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
             </div>
             <div class="clear"></div>
         </div>
-       <div class="search-bar">
-		<div class="bar">
-			<div class="wrp">
-				<input  v-model="info" type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk">
-				<a :href="'Search.html?info='+info" id="btn_search" class="bb">
-					<i class="fa fa-search"></i></a>
-				<div class="clear"></div>
-			</div>
-		</div>
-		</div>
+        <div class="search-bar">
+            <div class="bar">
+                <div class="wrp">
+                    <input type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk"> <a href="javascript:;"
+                                                                                             id="btn_search" class="bb"><i
+                        class="fa fa-search"></i></a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="member" class="member">
         <div class="m-left">
@@ -76,7 +90,7 @@
                         <li><a href="member.html"><i class="fa fa-navicon"></i> 用户中心</a></li>
                         <li><a href="setting.html" class="cur"><i class="fa fa-user"></i> 个人信息</a></li>
                         <li><a href="my.html"><i class="fa fa-music"></i> 无损分享</a></li>
-                        <li><a href="cs.html"><i class="fa fa-star"></i> 音乐收藏</a></li>
+                        <li><a href="javascript:alert(&#39;功能开发中,稍后更新&#39;)"><i class="fa fa-star"></i> 音乐收藏</a></li>
                         <li><a href="javascript:void(alert());"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                     </ul>
                 </div>
@@ -150,8 +164,7 @@
                 glod: "",
                 create_time: ""
             },
-            listtype:[],
-			info:"",
+            isVip: false
         },
         methods: {
             changeUser() {
@@ -172,16 +185,21 @@
             }
         },
         created() {
+
             var url = "user.do?op=queryUser"
             axios.get(url).then((res) => {
-                if (res.data === "请先登录 !"){
+                if (res.data === "请先登录 !") {
                     gotoLogin();
                 }
                 this.user = res.data;
             });
-        	axios.get("xuanran.s?op=querysingertype").then(res=>{
-				this.listtype=res.data;
-			});
+            axios.get("user.do?op=isVip").then((res) => {
+                if (res.data === "0") {
+                    this.isVip = true;
+                }else {
+                    alertMyVip()
+                }
+            });
         },
 
     });

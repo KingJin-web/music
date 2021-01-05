@@ -7,13 +7,6 @@
 	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script src="res/push.js"></script>
-	<script type="text/javascript">
-		if (/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i
-				.test(navigator.userAgent)) {
-			var url = window.location.pathname + window.location.search;
-			window.location.href = 'https://m.sq688.com' + url;
-		}
-	</script>
 	<link rel="shortcut icon" type="image/ico" href="https://www.sq688.com/favicon.ico">
 	<meta name="applicable-device" content="pc">
 	<meta name="mobile-agent" content="format=html5;url=download.html">
@@ -213,7 +206,7 @@
 				p.append("money",data);
 				axios.post("songspay.do?op=buysongs",p).then(res=>{
 					if(res.data=="成功"){
-					location.href = "http://localhost:8080/C91-S2-XM/buyorder/confirm?money="+data;
+					location.href = "http://localhost:9999/C91-S2-XM/buyorder/confirm?money="+data;
 					}else{
 						alert(res.data);
 					}

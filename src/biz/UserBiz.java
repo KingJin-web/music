@@ -8,7 +8,6 @@ import common.util.Utils;
 import dao.UserDao;
 
 import javax.mail.MessagingException;
-
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.List;
@@ -130,5 +129,93 @@ public class UserBiz {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param name
+     * @param page
+     * @param pageNums
+     * @return
+     */
+    public List<SqShare> queryShareByName(String name, int page, int pageNums) {
+        try {
+            return userDao.selectShareByUserName(name, page, pageNums);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int querySharePages(String name) {
+        try {
+            return userDao.selectSharePages(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void deleteShearById(String id) throws BizException {
+        try {
+            userDao.deleteShearById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BizException("删除失败");
+        }
+        throw new BizException("删除成功");
+    }
+
+    public void changeUserHead(String head, String name) throws BizException {
+        // System.out.println(head);
+        try {
+            userDao.updateUserHead(head, name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BizException("系统错误 ！");
+        }
+        throw new BizException("修改成功 ！");
+    }
+
+    /**
+     * 会员充值
+     *
+     * @param money
+     * @param name
+     */
+    public void changeUserVipDate(String money, String name) throws BizException {
+        try {
+            if (money.equals("15") || money == "15") {
+                userDao.vipOneMonths(name);
+            } else if (money.equals("30") || money == "30") {
+                userDao.vipThreeMonths(name);
+            } else if (money.equals("99") || money == "99") {
+                userDao.vipYears(name);
+            } else {
+                throw new BizException("系统故障 请联系管理员");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BizException("系统故障 请联系管理员");
+        }
+
+    }
+
+    public void isVipBiz(String name) throws BizException {
+        try {
+            if (userDao.isVip(name)){
+                throw new BizException("0");
+            }else {
+                throw new BizException("1");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BizException("系统错误");
+        }
+    }
+
+    public void changeUserHeadVip(String head, String name) {
+
     }
 }

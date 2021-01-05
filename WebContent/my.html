@@ -18,7 +18,14 @@
     <script type="text/javascript" src="js/Popup.js"></script>
     <script type='text/javascript' src='layui/layui.all.js'></script>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script type="text/javascript">
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
 
+            //…
+        });
+    </script>
 
 </head>
 <body>
@@ -30,22 +37,30 @@
                 <h1>超高无损音乐</h1>
             </div>
             <ul class="menu">
-                <li><a href="https://www.sq688.com/" class="cur">首页</a></li>
-                <li><a href="https://www.sq688.com/singer/10001.html">华语男歌手</a></li>
-                <li><a href="https://www.sq688.com/singer/10002.html">华语女歌手</a></li>
-                <li><a href="https://www.sq688.com/singer/10003.html">华语乐队</a></li>
-                <li><a href="https://www.sq688.com/singer/10005.html">欧美歌手</a></li>
-                <li><a href="https://www.sq688.com/singer/10006.html">日韩歌手</a></li>
-                <li><a href="https://www.sq688.com/singer/10004.html">专辑合集</a></li>
+                <li><a href="index.html" class="cur">首页</a></li>
+                <li><a href="singer.html#华语男歌手">华语男歌手</a></li>
+                <li><a href="singer.html#华语女歌手">华语女歌手</a></li>
+                <li><a href="singer.html#华语乐队">华语乐队</a></li>
+                <li><a href="singer.html#欧美歌手">欧美歌手</a></li>
+                <li><a href="singer.html#日韩歌手">日韩歌手</a></li>
+                <li><a href="singer.html#专辑合集">专辑合集</a></li>
                 <li><a href="share.html">网友分享</a></li>
 
             </ul>
             <div class="users">
-                <p>
-                    <a href="member.html" style="color: rgb(33, 127, 188); " v-text="user.nickname"><i
-                            class="fa fa-user"></i>
-                    </a>欢迎回来
-                </p>
+                <div>
+                    <ul class="layui-nav">
+                        <li class="layui-nav-item">
+                            <a href=""><img :src="user.head" class="layui-nav-img"></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="member.html" style="color: #0C0C0C">个人中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">会员中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="clear"></div>
         </div>
@@ -78,7 +93,7 @@
                         <li><a href="member.html"><i class="fa fa-navicon"></i> 用户中心</a></li>
                         <li><a href="setting.html"><i class="fa fa-user"></i> 个人信息</a></li>
                         <li><a href="my.html" class="cur"><i class="fa fa-music"></i> 无损分享</a></li>
-                        <li><a href="cs.html"><i class="fa fa-star"></i> 音乐收藏</a></li>
+                        <li><a href="javascript:alert(&#39;功能开发中,稍后更新&#39;)"><i class="fa fa-star"></i> 音乐收藏</a></li>
                         <li><a href="javascript:void(alert());"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                     </ul>
                 </div>
@@ -105,15 +120,31 @@
                     <tr v-for="share in shares">
                         <td v-text="share.name"></td>
                         <td v-text="share.singers"></td>
-                        <td v-text="share.createTime"></td>
+                        <td v-text="share.create_time"></td>
                         <td v-text="share.heat"></td>
-                        <td v-html="htmls"></td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-sm"
+                                        :value="share.name + '#'+ share.singers" onclick="lookShare(this.value)">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                                <button type="button" lay-event="edit" class="layui-btn layui-btn-sm"
+                                        :value="share.name"
+                                        onclick="changeShare(this.value)">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm" :value="share.id"
+                                        onclick="deleteShare(this.value)">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="mypage">
-                    <a href="https://www.sq688.com/my?page=0" class="back">上一页</a> <span class="total">1/1</span> <a
-                        href="javascript:void(0);" class="next">下一页</a>
+                    <a class="back" @click="last_page">上一页</a> <span class="total" v-text="page">1/1</span> <a
+                        class="next" @click="next_page">下一页</a>
                 </div>
             </div>
         </div>
@@ -135,55 +166,167 @@
 
 
 <script type="text/javascript">
+    function lookShare(data) {
+        console.log(data)
+        window.location.href = "share_item.html" + "?name=" + data;
+    }
+
+    function deleteShare(data) {
+        const url = "user.do?op=deleteShear&id=" + data;
+        layer.confirm('您真的要删除这首歌曲吗？', {
+            icon: 0,
+            skin: 'layui-layer-lan',
+            btn: ['确认', '取消'] //按钮
+        }, function (index) {
+            layer.close(index);
+            axios.get(url).then((res) => {
+                alertMy(res.data);
+                na.queryShareDelete();
+            });
+
+            console.log("===")
+        }, function () {
+            layer.close()
+        });
+
+    }
+
+    function changeShare(data) {
+        alertMy('等下写')
+
+    }
 
     const na = new Vue({
-        el: "#main",
-        data: {
-            shares: [],
-            htmls: '<div class="layui-btn-group">\n' +
-                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
-                '    <i class="layui-icon" >&#xe615;</i>\n' +
-                '  </button>\n' +
-                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
-                '    <i class="layui-icon">&#xe642;</i>\n' +
-                '  </button>\n' +
-                '  <button type="button" class="layui-btn layui-btn-sm">\n' +
-                '    <i class="layui-icon">&#xe640;</i>\n' +
-                '  </button>\n' +
-                '  </button>\n' +
-                '</div>',
-            user: {
-                id: 0,
-                name: "",
-                nickname: "",
-                pwd: "",
-                phone: "",
-                email: "",
-                qq: "",
-                head: "",
-                rank: "",
-                glod: "",
-                create_time: ""
-            }
-        },
-        created() {
-            const url1 = "user.do?op=queryUser";
-            axios.get(url1).then((res) => {
-                if (res.data === "请先登录 !") {
-                    gotoLogin();
+            el: "#main",
+            data: {
+                shares: [],
+                user: {
+                    id: 0,
+                    name: "",
+                    nickname: "",
+                    pwd: "",
+                    phone: "",
+                    email: "",
+                    qq: "",
+                    head: "",
+                    rank: "",
+                    glod: "",
+                    create_time: "",
+                    vipTime: ""
+                },
+                page: 1, //当前页数
+                pages: 0, //总数据数
+                pageNums: 10, //一页的数据数
+                pageMax: 0, //最大页数
+                isVip: false,
+            },
+            created() {
+                this.query();
+                this.queryShare();
+
+            },
+            methods: {
+                //上一页
+                last_page() {
+                    this.page -= 1;
+                    if (this.page <= 0) {
+                        alertMy("别点了到顶了！")
+                        this.page = 0;
+                        return;
+                    }
+
+                    this.queryShare();
+                },
+                //下一页
+                next_page() {
+                    this.page += 1;
+                    if (this.page > this.pageMax) {
+                        alertMy("别点了到底了！");
+                        this.page = this.pageMax;
+                        return;
+                    }
+                    this.queryShare();
+
+
+                },
+                query() {
+                    const url1 = "user.do?op=queryUser";
+                    axios.get(url1).then((res) => {
+                        if (res.data === "请先登录 !") {
+                            gotoLogin();
+                        }
+                        this.user = res.data;
+                    });
+
+                    const url2 = "user.do?op=querySharePages";
+                    axios.get(url2).then((res) => {
+                        if (res.data === "请先登录 !") {
+                            gotoLogin();
+                        }
+                        this.pages = res.data;
+                        //计算分页总数
+                        if (this.pages % this.pageNums === 0) {
+                            this.pageMax = this.pages / this.pageNums;
+                        } else {
+                            this.pageMax = this.pages / this.pageNums + 1;
+                        }
+                    });
+
+                    axios.get("user.do?op=isVip").then((res) => {
+                        if (res.data === "0") {
+                            this.isVip = true;
+                        } else {
+                            alertMyVip()
+                        }
+                    });
+
+
+                },
+                queryShare() {
+                    const url2 = "user.do?op=queryShare";
+                    axios.get(url2, {
+                        params: {
+                            page: this.page,
+                            pageNums: this.pageNums
+                        }
+                    }).then((res) => {
+                        this.shares = res.data;
+                    });
+
+                    for (var i = 0; i < this.shares.length; i++) {
+                        console.log("==== " + this.shares[i])
+                    }
+                },
+                queryShareDelete() {
+                    const url1 = "user.do?op=querySharePages";
+                    axios.get(url1).then((res) => {
+                        if (res.data === "请先登录 !") {
+                            gotoLogin();
+                        }
+                        this.pages = res.data;
+                        //计算分页总数
+                        if (this.pages % this.pageNums === 0) {
+
+                            this.pageMax = this.pages / this.pageNums;
+                        } else {
+                            this.pageMax = this.pages / this.pageNums + 1;
+                        }
+                    });
+                    const url2 = "user.do?op=queryShare";
+                    axios.get(url2, {
+                        params: {
+                            page: this.page,
+                            pageNums: this.pageNums
+                        }
+                    }).then((res) => {
+                        this.shares = res.data;
+                    });
                 }
-                this.user = res.data;
-                console.log(this.user)
-            });
 
-            const url2 = "user.do?op=queryShare";
-            axios.get(url2).then((res) => {
-                console.log(res.data)
-                this.shares = res.data;
-            });
-        },
+            }
 
-    });
+        })
+    ;
 </script>
 </body>
 

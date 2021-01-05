@@ -7,7 +7,7 @@
     <meta name="applicable-device" content="pc">
     <meta name="mobile-agent" content="format=html5;url=member.html">
     <link rel="alternate" media="only screen and(max-width: 800px)" href="member.html">
-    <title>网愈云_用户中心</title>
+    <title>用户中心_无损音乐下载_FLAC_WAV_APE_DSD_SQ688_超高无损音乐</title>
     <meta name="keywords" content="用户中心,无损音乐下载,FLAC,WAV,APE,DSD,SQ688超高无损音乐">
     <link rel="stylesheet" type="text/css" href="res/main.css">
     <link rel="stylesheet" type="text/css" href="res/font-awesome.css">
@@ -15,53 +15,57 @@
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="js/Popup.js"></script>
+    <link href="layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="layer/layer.js"></script>
+    <script type="text/javascript">
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
+
+            //…
+        });
+    </script>
 </head>
 <body>
+
 <div id="main">
     <div id="header" class="header">
         <div class="warp">
             <div class="logo">
-                <h1>网愈云音乐</h1>
+                <h1>超高无损音乐</h1>
             </div>
-           <ul class="menu" >
-			<li><a href="index.html" class="cur">首页</a></li>
-			<li v-show="i<6" v-for="(s,i) in listtype">
-				<a  :href=" 'singer.html#' +s.category">{{s.category}}</a>
-			</li>
-			<li v-show="i==6" v-for="(m,i) in listtype">
-				<a  href=" share.html">{{m.category}}</a>
-			</li>
-			<li v-show="i==7" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/yx/ ">{{s.category}}</a>
-			</li>
-			<li v-show="i==8" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/software/ ">{{s.category}}</a>
-			</li>
-		</ul>
+            <ul class="menu">
+                <li><a href="index.html" class="cur">首页</a></li>
+                <li><a href="singer.html#华语男歌手">华语男歌手</a></li>
+                <li><a href="singer.html#华语女歌手">华语女歌手</a></li>
+                <li><a href="singer.html#华语乐队">华语乐队</a></li>
+                <li><a href="singer.html#欧美歌手">欧美歌手</a></li>
+                <li><a href="singer.html#日韩歌手">日韩歌手</a></li>
+                <li><a href="singer.html#专辑合集">专辑合集</a></li>
+                <li><a href="share.html">网友分享</a></li>
+
+            </ul>
             <div class="users">
-                <p>
-                    <a href="member.html" style="color: rgb(33, 127, 188);" v-text="user.nickname"><i
-                            class="fa fa-user"></i>
-                    </a>欢迎回来
-                </p>
+                <div>
+                    <ul class="layui-nav">
+                        <li class="layui-nav-item">
+                            <a href=""><img :src="user.head" class="layui-nav-img"></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="member.html" style="color: #0C0C0C">个人中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+                                <dd><a href="vip.html" style="color: #0C0C0C">会员中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="clear"></div>
         </div>
-       <div class="search-bar">
-		<div class="bar">
-			<div class="wrp">
-				<input  v-model="info" type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk">
-				<a :href="'Search.html?info='+info" id="btn_search" class="bb">
-					<i class="fa fa-search"></i></a>
-				<div class="clear"></div>
-			</div>
-		</div>
-	</div>
-    
-    
     </div>
-    
-    
+
+
     <div id="member" class="member">
         <div class="m-left">
             <div class="top">
@@ -79,8 +83,7 @@
                         <li><a href="member.html" class="cur"><i class="fa fa-navicon"></i> 用户中心</a></li>
                         <li><a href="setting.html"><i class="fa fa-user"></i> 个人信息</a></li>
                         <li><a href="my.html"><i class="fa fa-music"></i> 无损分享</a></li>
-                        <li><a href="cs.html"><i class="fa fa-star"></i> 音乐收藏</a></li>
-                        <li><a href="javascript:void(alert());"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                        <li><a href="javascript:alert(&#39;功能开发中,稍后更新&#39;)"><i class="fa fa-star"></i> 音乐收藏</a></li>
                     </ul>
                 </div>
             </div>
@@ -125,69 +128,74 @@
             <div class="head" style="margin-top: 30px;">
                 <i class="leline"></i>头像选择(搜集自互联网)
             </div>
-            <div class="avts">
-                <ul>
-                    <li><img src="res/1.jpg"> <!----></li>
-                    <li><img src="res/2.jpg"> <!----></li>
-                    <li><img src="res/3.jpg"> <!----></li>
-                    <li><img src="res/4.jpg"> <!----></li>
-                    <li><img src="res/5.jpg"> <!----></li>
-                    <li><img src="res/6.jpg"> <!----></li>
-                    <li><img src="res/7.jpg"> <!----></li>
-                    <li><img src="res/8.jpg"> <!----></li>
-                    <li><img src="res/9.jpg"> <!----></li>
-                    <li><img src="res/10.jpg"> <!----></li>
-                    <li><img src="res/11.jpg"> <!----></li>
-                    <li><img src="res/12.jpg"> <!----></li>
-                    <li><img src="res/13.jpg"> <!----></li>
-                    <li><img src="res/14.jpg"> <!----></li>
-                    <li><img src="res/15.jpg"> <!----></li>
-                    <li><img src="res/16.jpg"> <!----></li>
-                    <li><img src="res/17.jpg"> <!----></li>
-                    <li><img src="res/18.jpg"> <!----></li>
-                    <li><img src="res/19.jpg"> <!----></li>
-                    <li><img src="res/20.jpg"> <!----></li>
-                    <li><img src="res/21.jpg"> <!----></li>
-                    <li><img src="res/22.jpg"> <!----></li>
-                    <li><img src="res/23.jpg"> <!----></li>
-                    <li><img src="res/24.jpg"> <!----></li>
-                    <li><img src="res/25.jpg"> <!----></li>
-                    <li><img src="res/26.jpg"> <!----></li>
-                    <li><img src="res/27.jpg"> <!----></li>
-                    <li><img src="res/28.jpg"> <!----></li>
-                    <li><img src="res/29.jpg"> <!----></li>
-                    <li><img src="res/30.jpg"> <!----></li>
-                    <li><img src="res/31.jpg"> <!----></li>
-                    <li><img src="res/32.jpg"> <!----></li>
-                    <li><img src="res/33.jpg"> <!----></li>
-                    <li><img src="res/34.jpg"> <!----></li>
-                    <li><img src="res/35.jpg"> <!----></li>
-                    <li><img src="res/36.jpg"> <!----></li>
-                    <li><img src="res/37.jpg"> <!----></li>
-                    <li><img src="res/38.jpg"> <!----></li>
-                    <li><img src="res/39.jpg"> <!----></li>
-                    <li><img src="res/40.jpg"> <!----></li>
-                    <li><img src="res/41.jpg"> <!----></li>
-                    <li><img src="res/42.jpg"> <!----></li>
-                    <li><img src="res/43.jpg"> <!----></li>
-                    <li><img src="res/44.jpg"> <!----></li>
-                    <li><img src="res/45.jpg"> <!----></li>
-                    <li><img src="res/46.jpg"> <!----></li>
-                    <li><img src="res/47.jpg"> <!----></li>
-                    <li><img src="res/48.jpg"> <!----></li>
-                    <li><img src="res/49.jpg"> <!----></li>
-                    <li><img src="res/50.jpg"> <!----></li>
-                    <li><img src="res/51.jpg"> <!----></li>
-                    <li><img src="res/52.jpg"> <!----></li>
-                    <li><img src="res/53.jpg"> <!----></li>
-                    <li><img src="res/54.jpg"> <!----></li>
-                    <li><img src="res/55.jpg"> <!----></li>
-                    <li><img src="res/56.jpg"> <!----></li>
-                    <li><img src="res/57.jpg"> <!----></li>
-                    <li><img src="res/58.jpg"> <!----></li>
-                    <li><img src="res/59.jpg"> <!----></li>
-                    <li><img src="res/60.jpg"> <!----></li>
-                </ul>
+
+            <div class="layui-carousel" id="test3" lay-filter="test1">
+                <div carousel-item style="text-align:center;margin:0 auto;">
+                    <div><img src="res/1.jpg"> <!----></div>
+                    <div><img src="res/2.jpg"> <!----></div>
+                    <div><img src="res/3.jpg"> <!----></div>
+                    <div><img src="res/4.jpg"> <!----></div>
+                    <div><img src="res/5.jpg"> <!----></div>
+                    <div><img src="res/6.jpg"> <!----></div>
+                    <div><img src="res/7.jpg"> <!----></div>
+                    <div><img src="res/8.jpg"> <!----></div>
+                    <div><img src="res/9.jpg"> <!----></div>
+                    <div><img src="res/10.jpg"> <!----></div>
+                    <div><img src="res/11.jpg"> <!----></div>
+                    <div><img src="res/12.jpg"> <!----></div>
+                    <div><img src="res/13.jpg"> <!----></div>
+                    <div><img src="res/14.jpg"> <!----></div>
+                    <div><img src="res/15.jpg"> <!----></div>
+                    <div><img src="res/16.jpg"> <!----></div>
+                    <div><img src="res/17.jpg"> <!----></div>
+                    <div><img src="res/18.jpg"> <!----></div>
+                    <div><img src="res/19.jpg"> <!----></div>
+                    <div><img src="res/20.jpg"> <!----></div>
+                    <div><img src="res/21.jpg"> <!----></div>
+                    <div><img src="res/22.jpg"> <!----></div>
+                    <div><img src="res/23.jpg"> <!----></div>
+                    <div><img src="res/24.jpg"> <!----></div>
+                    <div><img src="res/25.jpg"> <!----></div>
+                    <div><img src="res/26.jpg"> <!----></div>
+                    <div><img src="res/27.jpg"> <!----></div>
+                    <div><img src="res/28.jpg"> <!----></div>
+                    <div><img src="res/29.jpg"> <!----></div>
+                    <div><img src="res/30.jpg"> <!----></div>
+                    <div><img src="res/31.jpg"> <!----></div>
+                    <div><img src="res/32.jpg"> <!----></div>
+                    <div><img src="res/33.jpg"> <!----></div>
+                    <div><img src="res/34.jpg"> <!----></div>
+                    <div><img src="res/35.jpg"> <!----></div>
+                    <div><img src="res/36.jpg"> <!----></div>
+                    <div><img src="res/37.jpg"> <!----></div>
+                    <div><img src="res/38.jpg"> <!----></div>
+                    <div><img src="res/39.jpg"> <!----></div>
+                    <div><img src="res/40.jpg"> <!----></div>
+                    <div><img src="res/41.jpg"> <!----></div>
+                    <div><img src="res/42.jpg"> <!----></div>
+                    <div><img src="res/43.jpg"> <!----></div>
+                    <div><img src="res/44.jpg"> <!----></div>
+                    <div><img src="res/45.jpg"> <!----></div>
+                    <div><img src="res/46.jpg"> <!----></div>
+                    <div><img src="res/47.jpg"> <!----></div>
+                    <div><img src="res/48.jpg"> <!----></div>
+                    <div><img src="res/49.jpg"> <!----></div>
+                    <div><img src="res/50.jpg"> <!----></div>
+                    <div><img src="res/51.jpg"> <!----></div>
+                    <div><img src="res/52.jpg"> <!----></div>
+                    <div><img src="res/53.jpg"> <!----></div>
+                    <div><img src="res/54.jpg"> <!----></div>
+                    <div><img src="res/55.jpg"> <!----></div>
+                    <div><img src="res/56.jpg" alt=""> <!----></div>
+                    <div><img src="res/57.jpg"> <!----></div>
+                    <div><img src="res/58.jpg"> <!----></div>
+                    <div><img src="res/59.jpg"> <!----></div>
+                    <div><img src="res/60.jpg"> <!----></div>
+                </div>
+                <!-- 条目中可以是任意内容，如：<img src=""> -->
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" onclick="changeHead()">
+                    点击更换头像
+                </button>
             </div>
         </div>
     </div>
@@ -199,6 +207,45 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var count = 0;
+    layui.use(['carousel', 'form'], function () {
+            var carousel = layui.carousel
+                , form = layui.form;
+
+            //常规轮播
+            carousel.render({
+                elem: '#test3',
+                arrow: 'hover',
+                indicator: 'none',//指示器位置，可选值为：inside（容器内部）outside（容器外部）none（不显示）注意：如果设定了 anim:'updown'，该参数将无效
+                autoplay: 'true', //是否自动切换
+                interval: '10000'//	自动切换的时间间隔，单位：ms（毫秒），不能低于800	number	3000
+            });
+
+            //监听轮播切换事件
+            carousel.on('change(test1)', function (obj) { //test1来源于对应HTML容器的 lay-filter="test1" 属性值
+                count = obj.index;
+                console.log(obj.index); //当前条目的索引
+                console.log(obj.prevIndex); //上一个条目的索引
+                console.log(obj.item); //当前条目的元素对象
+
+            });
+        }
+    )
+
+    function changeHead() {
+        count += 1;
+        console.log("===" + count);
+        var url = "user.do?op=changeHead&head=" + "res/" + count + ".jpg"
+        axios.get(url).then((res) => {
+            alertMy(res.data);
+            na.query();
+        });
+    }
+
+</script>
+
 <script type="text/javascript">
     var na = new Vue({
         el: "#main",
@@ -214,29 +261,40 @@
                 head: "",
                 rank: "",
                 glod: "",
-                create_time: ""
-            },
-            listtype:[],
-			info:"",
+                createTime: "",
+                vipTime: ""
+            }
         },
         created() {
+
             var url = "user.do?op=queryUser"
             axios.get(url).then((res) => {
-                if (res.data === "请先登录 !"){
+                if (res.data === "请先登录 !") {
                     gotoLogin();
                 }
                 this.user = res.data;
-                alertAdv();
             });
-           
-    		axios.get("xuanran.s?op=querysingertype").then(res=>{
-    			this.listtype=res.data;
-    		});
+
+            axios.get("user.do?op=isVip").then((res) => {
+                if (res.data === "0") {
+                    this.isVip = true;
+                } else {
+                    alertMyVip()
+                }
+            });
         },
+        methods: {
+            query() {
+                var url = "user.do?op=queryUser"
+                axios.get(url).then((res) => {
+                    this.user = res.data;
+                });
+            }
+        }
 
     })
 
-</script>
 
+</script>
 </body>
 </html>

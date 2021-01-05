@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员权益</title>
+    <link rel="shortcut icon" type="image/ico" href="https://www.wuzhaoqi.top/web/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="res/font-awesome.css">
+    <script type="text/javascript" src="js/axios.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="js/Popup.js"></script>
+    <link href="layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="layer/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="res/main.css">
+
+</head>
+<body>
+<div id="main">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header header">
+            <ul class="layui-nav warp">
+                <li class="layui-nav-item ">
+                    <a href="vip.html">最新活动</a>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="Recharge.html">会员续费/充值</a>
+                </li>
+                <li class="layui-nav-item layui-this"><a href="viprights.html">会员权益</a></li>
+                <li class="layui-nav-item"><a href="">社区</a></li>
+                <li class="layui-nav-item" style="float: right;">
+                    <a href=""><img :src="user.head" class="layui-nav-img"></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="member.html" style="color: #0C0C0C">个人中心</a></dd>
+                        <dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+                        <dd><a href="vip.html" style="color: #0C0C0C">会员中心</a></dd>
+                        <dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="member" class="member">
+        <div class="layui-side layui-bg-black ">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body m-right">
+
+            <br> <br> <br> <br>
+            <div>
+                当前帐号：
+                <p v-text="user.name"></p>
+                <br>
+                <span id="vip1" v-if="isVip">会员有效期至<h5 v-text="user.vipTime"></h5></span>
+                <span id="vip2" v-if="isVip === false">会员已经在：<h5 v-text="user.vipTime +'  过期'"></h5> </span>
+
+            </div>
+
+            <br> <br>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var na = new Vue({
+        el: "#main",
+        data: {
+            user: {
+                id: 0,
+                name: "",
+                nickname: "",
+                pwd: "",
+                phone: "",
+                email: "",
+                qq: "",
+                head: "",
+                rank: "",
+                glod: "",
+                createTime: "",
+                vipTime: ""
+            },
+            isVip: false,
+        },
+        created() {
+            axios.get("user.do?op=isVip").then((res) => {
+                if (res.data === "0") {
+                    this.isVip = true;
+                }
+            });
+            var url = "user.do?op=queryUser"
+            axios.get(url).then((res) => {
+                if (res.data === "请先登录 !") {
+                    gotoLogin();
+                }
+                this.user = res.data;
+                axios.get("user.do?op=timeSF&time=" + this.user.vipTime).then((res) => {
+                    this.user.vipTime = res.data;
+                });
+
+
+            });
+
+
+        },
+        methods: {
+            query() {
+                var url = "user.do?op=queryUser"
+                axios.get(url).then((res) => {
+                    this.user = res.data;
+                    axios.get("user.do?op=timeSF&time=" + this.user.vipTime).then((res) => {
+                        this.user.vipTime = res.data;
+                    });
+                });
+            }
+        }
+
+
+    })
+
+
+</script>
+</body>
+</html>

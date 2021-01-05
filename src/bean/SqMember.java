@@ -26,6 +26,16 @@ public class SqMember {
 
     private Timestamp createTime;
 
+    private Timestamp vipTime;
+
+    public Timestamp getVipTime() {
+        return vipTime;
+    }
+
+    public void setVipTime(Timestamp vipTime) {
+        this.vipTime = vipTime;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -112,5 +122,23 @@ public class SqMember {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "SqMember{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", qq='" + qq + '\'' +
+                ", head='" + head + '\'' +
+                ", rank='" + rank + '\'' +
+                ", glod=" + glod +
+                ", createTime=" + createTime +
+                ", vipTime=" + vipTime +
+                '}';
     }
 }

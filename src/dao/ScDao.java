@@ -21,8 +21,8 @@ public class ScDao {
 	 */
 	public void insertcs(String singername,String song,String uname,String bofang_url) throws SQLException {
 		String sql="insert into sq_cs values(null,?,?,?,now(),?)";
-		DBHelper dbh=new DBHelper();
-		dbh.update(sql, singername,song,uname,bofang_url);
+
+		DBHelper.update(sql, singername,song,uname,bofang_url);
 	}
 	
 	/**
@@ -42,8 +42,8 @@ public class ScDao {
 				"	uname = ?\n" +
 				"AND singername = ?\n" +
 				"AND songname = ?";
-		DBHelper dbh=new DBHelper();
-		List<Integer> list=dbh.selectList(sql, new  ResultSetMapper<Integer>() {
+		
+		List<Integer> list=DBHelper.selectList(sql, new  ResultSetMapper<Integer>() {
 
 			@Override
 			public Integer map(ResultSet rs) throws SQLException {

@@ -1,3 +1,5 @@
-/web/
-/dao/
 /biz/
+/common/
+/dao/
+/web/
+/bean/

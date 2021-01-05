@@ -17,7 +17,14 @@
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="js/axios.js"></script>
     <script type="text/javascript" src="js/Popup.js"></script>
+    <script type="text/javascript">
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
 
+            //…
+        });
+    </script>
 </head>
 <body>
 <div id="main">
@@ -27,7 +34,7 @@
                 <h1>超高无损音乐</h1>
             </div>
             <ul class="menu">
-                <li><a href="https://www.sq688.com/" class="cur">首页</a></li>
+                <li><a href="index.html" class="cur">首页</a></li>
                 <li><a href="https://www.sq688.com/singer/10001.html">华语男歌手</a></li>
                 <li><a href="https://www.sq688.com/singer/10002.html">华语女歌手</a></li>
                 <li><a href="https://www.sq688.com/singer/10003.html">华语乐队</a></li>
@@ -37,9 +44,19 @@
                 <li><a href="https://www.sq688.com/share.html">网友分享</a></li>
             </ul>
             <div class="users">
-                <p><a href="member.html" style="color: rgb(33, 127, 188); " v-text="user.nickname"><i
-                        class="fa fa-user"></i>
-                </a>欢迎回来 </p>
+                <div>
+                    <ul class="layui-nav">
+                        <li class="layui-nav-item">
+                            <a href=""><img :src="user.head" class="layui-nav-img"></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="member.html" style="color: #0C0C0C">个人中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+                                <dd><a href="vip.html" style="color: #0C0C0C">会员中心</a></dd>
+                                <dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="clear"></div>
         </div>
@@ -189,7 +206,8 @@
                 rank: "",
                 glod: "",
                 create_time: ""
-            }
+            },
+            isVip: false,
         },
         created() {
             var url = "user.do?op=queryUser"
@@ -198,6 +216,14 @@
                     gotoLogin();
                 }
                 this.user = res.data;
+
+            });
+            axios.get("user.do?op=isVip").then((res) => {
+                if (res.data === "0") {
+                    this.isVip = true;
+                } else {
+                    alertMyVip()
+                }
             });
         },
 
@@ -213,7 +239,7 @@
             data: $("#publish").serialize(),
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
-                alertLayer(result,"my.html")
+                alertLayer(result, "my.html")
             },
             error: function () {
                 alert("异常！");

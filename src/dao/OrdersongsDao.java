@@ -1,10 +1,10 @@
 package dao;
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.List;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 import common.util.DBHelper;
 import common.util.DBHelper.ResultSetMapper;
@@ -13,8 +13,8 @@ public class OrdersongsDao {
 
 	public void insert(String uname,String singername,String songname,String money) throws SQLException {
 		String sql="insert into sq_ordersong values(null,?,?,?,?,now())";
-		DBHelper dbh=new DBHelper();
-		dbh.update(sql, uname,singername,songname,money);
+		
+		DBHelper.update(sql, uname,singername,songname,money);
 	}
 	
 	

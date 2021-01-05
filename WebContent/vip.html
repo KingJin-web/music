@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>会员中心</title>
+		<link rel="stylesheet" type="text/css" href="res/font-awesome.css">
+		<script type="text/javascript" src="js/axios.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+		<script type="text/javascript" src="js/Popup.js"></script>
+		<link href="layui/css/layui.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="layui/layui.js"></script>
+		<script type="text/javascript" src="layer/layer.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/main.css">
+
+		<link rel="stylesheet" href="//imgcache.gtimg.cn/vipstyle/client/phone_pay/css/style.css">
+		<script type="text/javascript">
+			//注意：导航 依赖 element 模块，否则无法进行功能性操作
+			layui.use('element', function() {
+				var element = layui.element;
+
+				//…
+			});
+		</script>
+	</head>
+	<body>
+
+		<div id="header" class="header">
+			<div class="layui-header header">
+				<ul class="layui-nav warp">
+				<li class="layui-nav-item layui-this">
+					<a href="vip.html">最新活动</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href="Recharge.html">会员续费/充值</a>
+				</li>
+				<li class="layui-nav-item"><a href="viprights.html">会员权益</a></li>
+				</li>
+				<li class="layui-nav-item"><a href="">社区</a></li>
+				<li class="layui-nav-item" style="float: right;">
+					<a href=""><img :src="user.head" class="layui-nav-img"></a>
+					<dl class="layui-nav-child">
+						<dd><a href="javascript:;" style="color: #0C0C0C">修改密码</a></dd>
+						<dd><a href="vip.html" style="color: #0C0C0C">会员中心</a></dd>
+						<dd><a href="javascript:;" style="color: #0C0C0C">退出登录</a></dd>
+					</dl>
+				</li>
+			</ul>
+			</div>
+
+			<section class="mod-aim">
+				<h1>手机话费开QQ会员</h1>
+				<p class="mod-aim-banner">手机话费开会员，满30天额外赠送150成长值</p>
+			</section>
+			<section class="mod mod-qq-pay">
+				<h2><span>方法一：线上开通<i></i></span></h2>
+				<div class="pay-method-content qq-pay-content">
+					<div class="ui-btn-group">
+						<button class="ui-btn-lg" id="vip-open">
+							开通会员<i class="icon-vip"></i>
+						</button>
+						<button class="ui-btn-lg ui-btn-primary" id="svip-open">
+							开通超级会员<i class="icon-svip"></i>
+						</button>
+					</div>
+					<p style="color: #b5b5b5;">由于运营商限制，流量卡、校园卡、本地卡等可能无法使用本方法开通<br>请详询运营商客服了解情况。</p>
+				</div>
+			</section>
+
+			<section class="mod mod-privilege">
+				<h2><span>精彩特权推荐</span></h2>
+				<div class="mod-privilege-content">
+					<h4>超级会员专享80余项顶级特权，覆盖QQ功能游戏生活购物，让你不再是大多数！</h4>
+					<ul class="mod-privilege-list">
+						<li>
+							<h3>最高两千人群</h3>
+							<p>独乐乐不如众乐乐</p>
+							<img src="//imgcache.gtimg.cn/vipstyle/client/phone_pay/img/privilege_group.png" alt="最高两千人群特权图标">
+						</li>
+						<li>
+							<h3>成长加速特权</h3>
+							<p>拥有飞一般的速度</p>
+							<img src="//imgcache.gtimg.cn/vipstyle/client/phone_pay/img/privilege_speed.png" alt="成长加速特权特权图标">
+						</li>
+						<li>
+							<h3>QQ等级加速</h3>
+							<p>QQ等级更快成长</p>
+							<img src="//imgcache.gtimg.cn/vipstyle/client/phone_pay/img/privilege_level.png" alt="QQ等级加速特权图标">
+						</li>
+						<li>
+							<h3>云消息漫游</h3>
+							<p>漫游聊天 记忆无间</p>
+							<img src="//imgcache.gtimg.cn/vipstyle/client/phone_pay/img/privilege_message.png" alt="云消息漫游特权图标">
+						</li>
+						<li>
+							<h3>好友克隆</h3>
+							<p>拒绝繁琐 一键克隆</p>
+							<img src="//imgcache.gtimg.cn/vipstyle/client/phone_pay/img/privilege_clone.png" alt="好友克隆特权图标">
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="mod mod-intro">
+				<h2><span>说明</span></h2>
+				<div class="mod-intro-content">
+					<p>1、发短信开通会员、手机开通会员均是通过手机话费支付，开通会员及超级会员服务的方式，只需一台手机即可完成开通，是目前最多人使用的支付方式；</p>
+					<p>2、开通时请保证手机话费余额充足，方法1服务到期情况按支付前提醒情况为准，方法2服务到期自动续费直至关闭；</p>
+					<p>3、由于运营商限制，无法使用方法2开通的省份为：<br>
+						A. 移动: 辽宁、黑龙江、西藏<br>
+						B. 联通：福建、广西、浙江、西藏、上海、内蒙、辽宁、吉林<br>
+						C. 电信：山东、湖南、新疆、甘肃、青海、宁夏、西藏<br>
+						请选用方法1尝试开通；
+					</p>
+					<p>4、由于运营商限制，流量卡、校园卡、本地卡等可能无法使用本方法开通，请详询运营商客服了解情况；</p>
+					<p>5、使用方法1开通时，扣费服务可能由运营商的合作伙伴：联动优势、MM、咪咕互娱、小沃商店、沃+商店、汇智科技、翼支付、爱游戏、爱动漫等协助扣费，不需担心被误扣；</p>
+					<!-- <p>6、使用方法2开通时，扣费服务可能由腾讯的合作伙伴：网典科技公司/英克必成公司协助，他们是我们忠诚的合作伙伴，不需担心被误扣。</p> -->
+				</div>
+			</section>
+			<footer class="ui-footer">
+				<nav>
+					<ul>
+						<li>
+							<a href="//vip.qq.com/clubact/2014/vipaccount/index.html?ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-qq"></span>
+								<span>官方手Q账号</span>
+								<div class="qrcode">
+									<img src="//imgcache.gtimg.cn/vipstyle/vipportal/v3/img/common/qq_qrcode_preview.jpg" alt="官方手Q账号">
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="//vip.qq.com/clubact/2013/wechat/index.html?ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-wechat"></span>
+								<span>官方微信账号</span>
+								<div class="qrcode">
+									<img src="//imgcache.qq.com/ACT/svip_act/act_img/kiddyhuang/201402/1392709767_big.png" alt="官方微信账号">
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="//buluo.qq.com/p/barindex.html?bid=10820&amp;ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-bbs"></span>
+								<span>兴趣部落</span>
+							</a>
+						</li>
+						<li>
+							<a href="//qqvip.qzone.qq.com/?ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-qzone"></span>
+								<span>官方空间</span>
+							</a>
+						</li>
+						<li>
+							<a href="//vip.qq.com/huafei.html" target="_blank">
+								<span class="ui-footer-icon icon-weibo"></span>
+								<span>话费开通专区</span>
+							</a>
+						</li>
+						<li>
+							<a href="//vip.qq.com/dui?ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-exchange"></span>
+								<span>兑换中心</span>
+							</a>
+						</li>
+						<li>
+							<a href="//kf.qq.com/product/vip.html?ADTAG=vip.qq.com" target="_blank">
+								<span class="ui-footer-icon icon-service"></span>
+								<span>客服中心</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<p class="ui-footer-copyright">Copyright © 1998 - 2017 Tencent . All Rights Reserved</p>
+				<p class="ui-footer-copyright">腾讯公司 版权所有</p>
+			</footer>
+			<script type="text/javascript" src="//imgcache.gtimg.cn/club/qv/pkg/qv_1.x.x.js" charset="utf-8"></script>
+			<script type="text/javascript" src="//youxi.vip.qq.com/common/js/lib/zero.tx.min-1.0.0.js"></script>
+			<!--<script charset="utf-8" src="//imgcache.qq.com/club/portal_new/js/vippay.js"></script>-->
+			<script src="https://pingjs.qq.com/tcss.ping.https.js"></script>
+			<script type="text/javascript" src="//imgcache.gtimg.cn/club/platform/lib/seajs/sea-with-plugin-p-2.2.1.js?_bid=250&max_age=2592000"></script>
+			<script type="text/javascript" src="//i.gtimg.cn/club/platform/vipsite/vip.seajs.config.js"></script>
+
+			<script>
+				document.domain = "qq.com";
+				(function() {
+					String.prototype.formatDIY = function() {
+						var a = arguments;
+						var data = (a.length == 1 && typeof(a[0]) == 'object') ? a[0] : a;
+						return this.replace(/\{([\d\w]+)\}/g, function(m, n) {
+							var idata = data[n],
+								type = typeof idata;
+							if (type === 'function') {
+								return idata(m);
+							} else if (type === 'string') {
+								return idata;
+							} else if (type === 'undefined') {
+								return m;
+							}
+							return idata.toString();
+						});
+					}
+				})();
+
+				define('index', ['$', 'lib/user/user', 'pay', 'login', 'lib/util/util'], function(require, exports, module) {
+					var $ = require('$');
+					var Pay = require('pay');
+					var Login = require('login');
+					var util = require('lib/util/util');
+					var User = require('lib/user/user');
+					var g_tk = util.getCSRFToken();
+					window.getAntiCSRFToken = g_tk;
+					var urlNo = location.origin + location.pathname;
+					var current = urlNo.match(/(.*\/(.*)\.html)/)[2] || "freedom_vipgrade"; //当前着色
+					var templ =
+						'<div class="ui-navbar-status-userinfo " id="menu-user-panel"><a href="//vip.qq.com/my/index.html">\
+                  <span class="ui-navbar-status-avatar">\
+                      <img src="{face_url_40}" width="30" height="30" alt="头像">\
+                  </span>\
+                  <span class="ui-navbar-status-username">{nick_name}</span>\
+              </a>\
+              <div class="ui-navbar-userbox ui-hide">\
+                  <div class="user-head">\
+                      <a href="//vip.qq.com/my/index.html" class="head-pic">\
+                          <img src="{face_url_100}" alt="" width="100" height="100">\
+                          <span class="head-cover"></span>\
+                      </a>\
+                      <dl class="user-info">\
+                          <dt class="user-name">\
+                              <a href="//vip.qq.com/my/index.html">{nick_name}</a>\
+                          </dt>\
+                          <dd>\
+                              {temp_vip}\
+                          </dd>\
+                          {temp_end_time}\
+                          <dd><a href="javascript:void(0);" id="menu-pop-logout-btn">退出</a></dd>\
+                      </dl>\
+                  </div>\
+                  <!-- ui-navbar-user-head end -->\
+                  <div class="user-grow-info">\
+                      <ul>\
+                          <li>\
+                              <a href="javascript:void(0)"><span class="num" id="totalgrowth">{growth_value}</span>总成长值</a>\
+                          </li>\
+                          <li>\
+                              <a href="//vip.qq.com/my_freedom/level.html"><span class="num">{add_step}</span>每日成长值</a>\
+                          </li>\
+                          <li>\
+                              <a href="//vip.qq.com/freedom/freedom_vipgrade.html"><span class="num">{qq_speed}</span>倍QQ等级加速</a>\
+                          </li>\
+                      </ul>\
+                  </div>\
+              </div>\
+              <span class="ui-navbar-status-logout" id="menu-logout-btn">退出</span></div><div class="ui-btn ui-btn-basic-s-flex"> \
+                <span class="inner-text" id="menu-pay-btn">开通超级会员</span> \
+                <span class="right-radius"></span>\
+            </div>';
+					var temp_vip =
+						'<a onclick="try{pgvSendClick({hottag:\'vipsite.index.userpanel.vipicon\'})}catch(e){}" href="//vip.qq.com/my/index.html" target="_blank">\
+                                <span class="ui-level-svip">\
+                                  <span style="background-image: url({vip_url});"></span>\
+                                </span>\
+                              </a><a onclick="try{pgvSendClick({hottag:\'vipsite.index.userpanel.yearicon\'})}catch(e){}" href="//vip.qq.com/year_vip/year.html" target="_blank">\
+                                <span class="ui-level-yearsvip">\
+                                    <span style="background-image: url({year_vip_url});"></span>\
+                                </span>\
+                              </a>';
+					var temp_end_time = '<dd>{superclub_end_time}到期</dd>';
+
+					function rendTopInfo() {
+						$.ajax({
+							url: '//cgi.vip.qq.com/profile/userInfo',
+							data: {
+								data: 'growth_value,add_step,qq_speed,superclub_end_timestamp,superclub_end_time,club_end_timestamp,uin,nick_name,is_club,level,is_preclub,is_year_club,club_end_time,face_url,bank_pay,is_superclub',
+								g_tk: g_tk,
+								p_tk: util.cookie.get("pt4_token")
+							},
+							dataType: 'jsonp',
+							success: function(data) {
+								if (data.ret == 0) {
+									var faceUrl = data.face_url;
+									faceUrl = faceUrl.replace(/^http:/, '');
+									data.face_url_40 = faceUrl;
+									data.face_url_100 = data.face_url.replace('s=40', 's=100');
+									data.old_nick_name = data.nick_name;
+									data.nick_name = safeHTML(data.nick_name);
+									var html_vip = temp_vip.formatDIY({
+										vip_url: getVipLevelUrl(data),
+										year_vip_url: getYearVipUrl(data)
+									});
+									var html_temp_end_time = ((data.is_club || data.is_superclub) ? temp_end_time.formatDIY(data) : '');
+									var prop = $.extend({}, data, {
+										temp_vip: html_vip,
+										temp_end_time: html_temp_end_time
+									});
+									var html = templ.formatDIY(prop);
+									$('#menu-userinfo-panel').html(html);
+								} else if (data.ret == -10) {
+									util.ssCGIAuthDialog();
+								}
+							}
+						});
+					}
+
+					function safeHTML(str) { //换衣html
+						return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+					}
+
+					function getVipLevelUrl(data) { //获取会员等级url
+						var url;
+						if (!data.is_superclub && !data.is_club) {
+							url = '//i.gtimg.cn/vipstyle/global/img/level_v2/off/vip0.png';
+						} else if (data.is_superclub) {
+							url = '//i.gtimg.cn/vipstyle/global/img/level_v2/svip' + data.level + '.png';
+						} else if (data.is_club) {
+							url = '//i.gtimg.cn/vipstyle/global/img/level_v2/vip' + data.level + '.png';
+						}
+						return url;
+					}
+
+					function getYearVipUrl(data) { //获取年费会员url
+						if (data.is_year_club) {
+							return '//i.gtimg.cn/vipstyle/global/img/level_v2/year' + (data.is_superclub ? 's' : '') + 'vip.png';
+						} else {
+							return '//i.gtimg.cn/vipstyle/global/img/level_v2/off/yearvip.png';
+						}
+					}
+					//初始化开通按钮
+					function initPayBtn() {
+						var smartPay = new Pay.smartPay();
+						var aid = "";
+						User.getInfo(function(info) {
+							if (!info.is_login) {
+								$('#privilegetop,#privilegebottom').bind("click", function() {
+									Login.open();
+								});
+								return;
+							}
+							smartPay.initPay({
+								aid: aid
+							}, function(data) {
+								var classObj = {
+										'svip_btn_join_em': 'ui-btn-join-svip-lg', //开通超级会员
+										'svip_btn_active_em': 'ui-btn-activate-svip-lg', //激活超级会员
+										'svip_btn_upgrade_em': 'ui-btn-upgrade-svip-lg', //升级超级会员
+										'svip_btn_repay_em': 'ui-btn-renew-svip-lg', //续费超级会员
+										'svip_btn_upgrade_year_em': 'ui-btn-upgrade-ysvip-lg', //升级年费超级会员
+										'svip_btn_repay_year_em': 'ui-btn-renew-ysvip-lg', //续费年费超级会员
+										'svip_btn_join_year_em': 'ui-btn-join-ysvip-lg', //开通年费超级会员
+										'vip_btn_repay_em': 'ui-btn-renew-svip-lg' //开通年费超级会员
+									},
+									btnClass = 'ui-btn-join-svip-lg';
+								classObj[data.btnConfig.btnClassName] && (btnClass = classObj[data.btnConfig.btnClassName]);
+								$('#privilegetop,#privilegebottom')
+									.text(data.btnConfig.btnText)
+									.attr('class', 'ui-btn ' + btnClass)
+									.on('click', function() {
+										aid = $(this).attr("data-aid");
+										smartPay.pay(aid);
+									});
+
+							});
+						});
+
+					}
+
+					function main() {
+						rendTopInfo();
+						$(function() {
+							initPayBtn();
+						});
+					}
+					main();
+					var Page = qv.zero.extend(qv.zero.AbstractPage, {
+						userJsonID: 203106,
+						preloads: ['LoadingMark'],
+						init: function() {
+							Page.superclass.init.apply(this, arguments);
+						},
+						initEvent: function() {
+							Page.superclass.initEvent.call(this);
+
+							$('.ui-tab-nav').on('click', 'li', function() {
+								$('.ui-tab-nav li').removeClass('current');
+								$('.ui-tab-nav li').eq($(this).index()).addClass('current');
+								$('.sms-pay-content li').removeClass('show');
+								$('.sms-pay-content li').eq($(this).index()).addClass('show');
+							})
+
+							$('#vip-open').on('click', function() {
+								var config = {
+									codes: "ltmclub",
+									scene: 'minipay',
+									channels: "",
+									defaultChannel: "uniphone",
+									amount: 1,
+									amountType: "month",
+									aid: "vip.p.a.mb_1"
+								};
+								vippay.openService(config);
+							});
+
+							$('#svip-open').on('click', function() {
+								var config = {
+									codes: "cjclubt",
+									scene: 'minipay',
+									channels: "",
+									defaultChannel: "uniphone",
+									amount: 1,
+									amountType: "month",
+									aid: "vip.p.a.mb_2"
+								};
+								vippay.openService(config);
+							});
+
+							var tab = 'yd-tab';
+							var code = 'yd-code';
+							var getStation = function() {
+								$.ajax({
+									url: '//cgi.vip.qq.com/stationandmobile/getstationandmobile',
+									dataType: 'jsonp',
+									data: {
+										g_tk: qq.security.getCSRFToken()
+									},
+									success: function(json) {
+										if (json.ret == 0) {
+											if (json.data.operator == 'gmcc') {
+												tab = 'yd-tab';
+												code = 'yd-code';
+											}
+											if (json.data.operator == 'unicom') {
+												tab = 'lt-tab';
+												code = 'lt-code';
+											}
+											if (json.data.operator == 'cdma') {
+												tab = 'dx-tab';
+												code = 'dx-code';
+											}
+										}
+
+										$('.ui-tab-nav li').removeClass('current');
+										$('.sms-pay-content li').removeClass('show');
+										$('#' + tab).addClass('current');
+										$('#' + code).addClass('show');
+									}
+								});
+							}
+							getStation();
+						}
+					});
+					window.page = new Page();
+					if (typeof(pgvMain) == "function") {
+						pgvMain();
+					}
+				});
+				seajs.use('index');
+			</script>
+		</div>
+	</body>
+</html>

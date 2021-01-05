@@ -21,11 +21,11 @@ public class SqShare {
 
     private Integer heat;
 
-    private String downUrl;
+    private String down_url;
 
     private String member;
 
-    private Timestamp createTime;
+    private Timestamp create_time;
 
     private String status;
 
@@ -102,11 +102,11 @@ public class SqShare {
     }
 
     public String getDownUrl() {
-        return downUrl;
+        return down_url;
     }
 
-    public void setDownUrl(String downUrl) {
-        this.downUrl = downUrl == null ? null : downUrl.trim();
+    public void setDownUrl(String down_url) {
+        this.down_url = down_url == null ? null : down_url.trim();
     }
 
     public String getMember() {
@@ -118,11 +118,11 @@ public class SqShare {
     }
 
     public Timestamp getCreateTime() {
-        return createTime;
+        return create_time;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setCreateTime(Timestamp create_time) {
+        this.create_time = create_time;
     }
 
     public String getStatus() {
@@ -131,5 +131,24 @@ public class SqShare {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SqShare{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", singers='" + singers + '\'' +
+                ", type='" + type + '\'' +
+                ", tags='" + tags + '\'' +
+                ", srcType='" + srcType + '\'' +
+                ", format='" + format + '\'' +
+                ", intro='" + intro + '\'' +
+                ", heat=" + heat +
+                ", down_url='" + down_url + '\'' +
+                ", member='" + member + '\'' +
+                ", create_time=" + create_time +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

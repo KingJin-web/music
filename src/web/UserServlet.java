@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @WebServlet("/user.do")
 public class UserServlet extends BaseServlet {
@@ -39,7 +43,6 @@ public class UserServlet extends BaseServlet {
                 biz.InsertUser(sqMember);
                 write(resp, "注册成功 !");
             } catch (BizException e) {
-                e.printStackTrace();
                 write(resp, e.getMessage());
             }
         } else {
@@ -122,7 +125,6 @@ public class UserServlet extends BaseServlet {
             biz.change(sqMember);
             write(resp, "修改成功");
         } catch (BizException e) {
-            e.printStackTrace();
             write(resp, e.getMessage());
         }
     }
@@ -142,9 +144,8 @@ public class UserServlet extends BaseServlet {
         System.out.println(sqShare);
         try {
             biz.addShare(sqShare);
-            write(resp, "修改成功 !");
+            write(resp, "提交成功 !");
         } catch (BizException e) {
-            e.printStackTrace();
             write(resp, e.getMessage());
         }
 
@@ -153,16 +154,159 @@ public class UserServlet extends BaseServlet {
     public void queryShare(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = String.valueOf(req.getSession().getAttribute("name"));
         //如果session 为空 转为string 则是“null” 字符串 而不是 null
-        System.out.println(name);
         if (name == "null" || name.equals("null")) {
             write(resp, "请先登录 !");
             return;
         }
-        write(resp, biz.queryShareByName(name));
-
+        String page_ = req.getParameter("page");
+        String pageNums_ = req.getParameter("pageNums");
+        int page = Integer.parseInt(page_), pageNums = Integer.parseInt(pageNums_);
+        write(resp, biz.queryShareByName(name, page, pageNums));
 
     }
 
+    public void querySharePages(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = String.valueOf(req.getSession().getAttribute("name"));
+        if (name == "null" || name.equals("null")) {
+            write(resp, "请先登录 !");
+            return;
+        }
+        int pages = biz.querySharePages(name);
+        write(resp, pages);
+    }
+
+    public void deleteShear(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String id = req.getParameter("id");
+        try {
+            biz.deleteShearById(id);
+        } catch (BizException e) {
+            write(resp, e.getMessage());
+        }
+    }
+
+    /**
+     * 修改头像
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void changeHead(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = String.valueOf(req.getSession().getAttribute("name"));
+        if (name == "null" || name.equals("null")) {
+            write(resp, "请先登录 !");
+            return;
+        }
+        String head = req.getParameter("head");
+        try {
+            biz.changeUserHead(head, name);
+        } catch (BizException e) {
+            write(resp, e.getMessage());
+        }
+    }
+
+
+    /**
+     * 格式化会员时间
+     *
+     * @param req  把 Jul 8, 2020 12:00:00 AM 格式的时间转换为 2020-07-08 12:00:00 格式的时间
+     * @param resp
+     * @throws IOException
+     */
+    public void timeSF(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String time = req.getParameter("time");
+        if(time.equals(null) ||time.equals("undefined")|| time.isEmpty()) {
+        	 write(resp, "您没冲过会员");
+        }else {
+        	  write(resp, parse_date(time, false));
+        }
+      
+    }
+
+    /**
+     * 判断 是否还是会员 0 代表是 1 代表不是
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void isVip(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = String.valueOf(req.getSession().getAttribute("name"));
+        if (name == "null" || name.equals("null")) {
+            write(resp, "请先登录 !");
+            return;
+        }
+        try {
+            biz.isVipBiz(name);
+
+        } catch (BizException e) {
+            write(resp, e.getMessage());
+        }
+
+    }
+
+    public void vipCZ(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String money = req.getParameter("money");
+        String name = String.valueOf(req.getSession().getAttribute("name"));
+        if (name == "null" || name.equals("null")) {
+            write(resp, "请先登录 !");
+            return;
+        }
+        System.out.println("充值了" + money);
+        try {
+            biz.changeUserVipDate(money, name);
+            write(resp, "充值成功");
+        } catch (BizException e) {
+            write(resp, e.getMessage());
+        }
+    }
+
+
+    /**
+     * 把 Jul 8, 2020 12:00:00 AM 格式的时间转换为 2020-07-08 12:00:00 格式的时间
+     *
+     * @param date Jul 8, 2020 12:00:00 AM 格式的时间
+     * @param type true 返回年月日格式  false 返回年月日时分秒
+     */
+    public static String parse_date(String date, boolean type) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy K:m:s a", Locale.ENGLISH);
+        Date d2 = null;
+        try {
+            //把Jul 8, 2020 12:00:00 AM格式转换为常规的Date格式
+            d2 = sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat simpleDateFormat;
+        if (type) {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        } else {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+        //再把Date的时间转换为需要的格式
+        String format = simpleDateFormat.format(d2);
+        return format;
+    }
+
+    /**
+     * 把 2020-07-08 12:00:00 格式的时间转换为 Jul 8, 2020 12:00:00 AM 格式的时间
+     *
+     * @param date 年月日时分秒 格式的时间
+     */
+    public static String format_date(String date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d2 = null;
+        try {
+            //把 2020-07-08 12:00:00 格式的时间转换为 常规Date时间
+            d2 = simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy K:m:s a", Locale.ENGLISH);
+        //再把 常规Date时间转换回 Jul 8, 2020 12:00:00 AM 格式的时间
+        String format = sdf.format(d2);
+        return format;
+    }
 
 
 }
