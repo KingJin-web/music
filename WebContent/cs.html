@@ -1,90 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="res/push.js"></script>
-<script type="text/javascript">
-if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(navigator.userAgent)) {var url = window.location.pathname+window.location.search;window.location.href = 'https://m.sq688.com'+url;}
-</script>
-<link rel="shortcut icon" type="image/ico" href="https://www.sq688.com/favicon.ico">
+<link rel="shortcut icon" type="image/ico"
+	href="https://www.sq688.com/favicon.ico">
 <meta name="applicable-device" content="pc">
-<meta name="mobile-agent" content="format=html5;url=https://m.sq688.com/detail/3.html">
-<link rel="alternate" media="only screen and(max-width: 800px)" href="https://m.sq688.com/detail/3.html">
+<meta name="mobile-agent"
+	content="format=html5;url=https://m.sq688.com/detail/3.html">
+<link rel="alternate" media="only screen and(max-width: 800px)"
+	href="https://m.sq688.com/detail/3.html">
 <title>网愈云喜欢</title>
-<meta name="keywords" content="周杰伦,无损音乐下载,WAV,FLAC,APE,SQ688,超高无损音乐">
-<meta name="description" content="周杰伦（Jay Chou），
-1979年1月18日出生在台湾省新北市，华语男歌手、词曲创作人、演员、制作人、导演、编剧、监制。2000年发行首张个人专辑《Jay》。2002年发行的专辑《范特西》奠定其融合中西方音乐的风格。2003年成为美国《时代周刊》的封面人物 。2004年获得世界音乐大奖中国最畅销艺人奖 。2005年凭借动作片《头文字D》获得台湾电影金马奖、香港电影金像奖最佳新人奖。2006年起连续三年获得世界音乐大奖中国最畅销艺人奖。2007年自编自导的文艺片《不能说的秘密》获得台湾电影金马奖年度台湾杰出电影奖；同年获得第18届金曲奖最佳单曲制作人奖 。">
 <link rel="stylesheet" type="text/css" href="res/main.css">
 <link rel="stylesheet" type="text/css" href="res/font-awesome.css">
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="js/Popup.js"></script>
+<script type="text/javascript">
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
+
+            //…
+        });
+    </script>
 </head>
 <body>
-	  <div id="header" class="header">
-        <div class="warp">
-            <div class="logo">
-                <h1>网愈云音乐</h1>
-            </div>
-           <ul class="menu" >
-			<li><a href="index.html" class="cur">首页</a></li>
-			<li v-show="i<6" v-for="(s,i) in listtype">
-				<a  :href=" 'singer.html#' +s.category">{{s.category}}</a>
-			</li>
-			<li v-show="i==6" v-for="(m,i) in listtype">
-				<a  href=" share.html">{{m.category}}</a>
-			</li>
-			<li v-show="i==7" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/yx/ ">{{s.category}}</a>
-			</li>
-			<li v-show="i==8" v-for="(s,i) in listtype">
-				<a  href="https://www.sq688.com/software/ ">{{s.category}}</a>
-			</li>
-		</ul>
-           <div class="users">
-			<a href="login.html"><i class="fa fa-sign-in"></i> 登录</a> / 
-			<a href="register.html"><i class="fa fa-registered"></i> 注册</a>
+	<div id="header" class="header">
+		<div class="warp" id="main">
+			<div class="logo">
+				<h1>网愈云音乐</h1>
 			</div>
-            <div class="clear"></div>
-        </div>
-       <div class="search-bar">
-		<div class="bar">
-			<div class="wrp">
-				<input  v-model="info" type="text" id="keyword" placeholder="请输入歌曲名称或者歌手" class="kk">
-				<a :href="'Search.html?info='+info" id="btn_search" class="bb">
-					<i class="fa fa-search"></i></a>
-				<div class="clear"></div>
+			<ul class="menu"style="color: #0C0C0C" >
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="index.html" class="cur">首页</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="singer.html#华语男歌手">华语男歌手</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C"href="singer.html#华语女歌手">华语女歌手</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="singer.html#华语乐队">华语乐队</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="singer.html#欧美歌手">欧美歌手</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="singer.html#日韩歌手">日韩歌手</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="singer.html#专辑合集">专辑合集</a></li>
+				<li style="color: #0C0C0C"><a style="color: #0C0C0C" href="share.html">网友分享</a></li>
+
+			</ul>
+			<div class="users">
+				<div>
+					<ul class="layui-nav">
+						<li class="layui-nav-item"><a href=""><img
+								:src="user.head" class="layui-nav-img"></a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="member.html" style="color: #0C0C0C">个人中心</a>
+								</dd>
+								<dd>
+									<a href="javascript:;" style="color: #0C0C0C">修改密码</a>
+								</dd>
+								<dd>
+									<a href="vip.html" style="color: #0C0C0C">会员中心</a>
+								</dd>
+								<dd>
+									<a href="" style="color: #0C0C0C">退出登录</a>
+								</dd>
+							</dl></li>
+					</ul>
+				</div>
 			</div>
 		</div>
+
+
+		<div class="search-bar">
+			<div class="bar">
+				<div class="wrp">
+
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
-    
-    
-    </div>
-    <script type="text/javascript">
-    var v=new Vue({
-    	el:".header",
-    	data:{
-    		 listtype:[],
- 			info:"",
-    	},
-    	 created() {          
-    		axios.get("xuanran.s?op=querysingertype").then(res=>{
-    			this.listtype=res.data;
-    		});
-        },
-    });
-    </script>
-	
-	
+
+
+
+
+
+
+
 	<div class="detail">
 		<div class="swarp">
-			
+
 
 			<!--right-->
 			<div class="srt">
-				 <div class="ww">
+				<div class="ww">
 					<div id="details" class="avt">
-						<img :src="listuser[0].head"  class="avt ">
-						
+						<img :src="listuser[0].head" class="avt ">
+
 					</div>
 					<div class="det">
 						<h2>{{listuser[0].nickname}}喜欢的音乐</h2>
@@ -94,7 +105,7 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 						<p>
 							<span>创建时间:{{listuser[0].create_time}}</span>
 						</p>
-						
+
 					</div>
 
 					<div class="clear"></div>
@@ -108,7 +119,7 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 						<tbody>
 							<tr>
 								<!-- <th style="width: 40%; padding-left: 8px;">歌曲名称</th> -->
-								<th> </th>
+								<th></th>
 								<th>歌名</th>
 								<th>歌手</th>
 								<th>收藏时间</th>
@@ -117,33 +128,29 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 								<th>!</th>
 							</tr>
 							<tr v-for="(s,i) in list">
-								<td style="padding-left: 8px;">
-									<a href="#"
-									target="_blank" class="st">{{i+1}}</a>
-								</td>
-								<td><a :href=" 'download.html?name='+(s.singername)+'#'+s.songname" 
+								<td style="padding-left: 8px;"><a href="#" target="_blank"
+									class="st">{{i+1}}</a></td>
+								<td><a
+									:href=" 'download.html?name='+(s.singername)+'#'+s.songname"
 									target="_blank" class="st">{{s.songname}}</a></td>
-								<td>
-									<span class="songstype">{{s.singername}}</span>
-								</td>
+								<td><span class="songstype">{{s.singername}}</span></td>
 								<td>{{s.cstime}}</td>
-								<td style="width:260" v-html="s.bofang_url"> 
+								<td style="width: 260" v-html="s.bofang_url"></td>
+								<td>
+									<button type="button" @click="del(s.songname,s.singername)">删除</button>
 								</td>
-								<td >
-								 <button type="button" @click="del(s.songname,s.singername)">删除</button>
-								</td>
-							</tr>	
+							</tr>
 						</tbody>
 					</table>
 					<input type="hidden" id="id" value="3">
 				</div>
 			</div>
-		
-		
-		
+
+
+
 		</div>
-		
-		
+
+
 		<div class="clear"></div>
 	</div>
 	<script type="text/javascript">
@@ -179,12 +186,65 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 	
 	
 	</script>
+
+
+	<script type="text/javascript">
+    var v=new Vue({
+    	el:".header",
+    	data:{
+    		listtype:[],
+ 			info:"",
+ 			 user: {
+                 id: 0,
+                 name: "",
+                 nickname: "",
+                 pwd: "",
+                 phone: "",
+                 email: "",
+                 qq: "",
+                 head: "",
+                 rank: "",
+                 glod: "",
+                 create_time: ""
+             },
+             isVip: false,
+    	},
+    	 created() {          
+    		axios.get("xuanran.s?op=querysingertype").then(res=>{
+    			this.listtype=res.data;
+    		});
+    		
+    		 var url = "user.do?op=queryUser"
+    	            axios.get(url).then((res) => {
+    	                if (res.data === "请先登录 !") {
+    	                    gotoLogin();
+    	                }
+    	                this.user = res.data;
+    	            });
+    	            axios.get("user.do?op=isVip").then((res) => {
+    	                if (res.data === "0") {
+    	                    this.isVip = true;
+    	                }else {
+    	                    alertMyVip()
+    	                }
+    	            });
+        },
+    });
+    </script>
+
 	<div class="footer">
 		<div class="warp">
-			Copyright 2015-2018 SQ688.com 超高无损音乐<br>本站所有数据均系网友搜集自互联网后分享,本站服务器不存储任何音乐文件,也无意侵犯您的版权,如若任何人声称是任何音乐的版权所有人,请联系sqshangwu@gmail.com,本站会尽快删除,<br>郑重声明本站旨在无损音乐交流分享,不与任何淘宝店铺或机构合作参与任何形式的获利行为,敬请网友注意谨防受骗! <br> 桂ICP备13001859号-4
+			Copyright 2015-2018 SQ688.com 超高无损音乐<br>本站所有数据均系网友搜集自互联网后分享,本站服务器不存储任何音乐文件,也无意侵犯您的版权,如若任何人声称是任何音乐的版权所有人,请联系sqshangwu@gmail.com,本站会尽快删除,<br>郑重声明本站旨在无损音乐交流分享,不与任何淘宝店铺或机构合作参与任何形式的获利行为,敬请网友注意谨防受骗!
+			<br> 桂ICP备13001859号-4
 			<script type="text/javascript" src="res/z_stat.php"></script>
 			<script src="res/core.php" charset="utf-8" type="text/javascript"></script>
-			<a href="https://www.cnzz.com/stat/website.php?web_id=1277751974" target="_blank" title="站长统计">站长统计</a> <br> 本站唯一QQ群(892306409)欢迎各大音乐爱好者加入 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=40edf9935a8deb7a8eeb6e93853111156fb280203fb799c7d11471aea22304fb"> <img border="0" src="res/group.png" alt="超高无损音乐|SQ688" title="超高无损音乐|SQ688"></a>
+			<a href="https://www.cnzz.com/stat/website.php?web_id=1277751974"
+				target="_blank" title="站长统计">站长统计</a> <br>
+			本站唯一QQ群(892306409)欢迎各大音乐爱好者加入 <a target="_blank"
+				href="https://shang.qq.com/wpa/qunwpa?idkey=40edf9935a8deb7a8eeb6e93853111156fb280203fb799c7d11471aea22304fb">
+				<img border="0" src="res/group.png" alt="超高无损音乐|SQ688"
+				title="超高无损音乐|SQ688">
+			</a>
 		</div>
 	</div>
 	<!--页面脚本-->
