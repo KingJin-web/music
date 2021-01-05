@@ -36,7 +36,11 @@ a { text-decoration:none; }
 .header .warp .search .s_key { float:right; outline:none; border:none; display:block; font-size:12px; height:34px; padding-left:8px; width:180px; border-top-left-radius:4px; border-bottom-left-radius:4px; }
 .header .warp .search .s_btn { float:right; background-color:#fff; width:24px; text-align:center;font-size:16px; display:block; height:34px; line-height:34px; color:#ccc; border-top-right-radius:4px; border-bottom-right-radius:4px; }
 .banner { position:relative; overflow:hidden; height:500px; }
+.indexss { position:relative; overflow:hidden; height:400px; }
+
 .banner .bg { position: absolute; top:0; left:0; right:0; bottom:0;  background-image:url(../images/banner.jpg); background-position: center 0; background-repeat:no-repeat; }
+.indexss .ss { position: absolute; top:0; left:0; right:0; bottom:0;  background-image:url(../images/index1.jpg); background-position: center 0; background-repeat:no-repeat; }
+
 .header .warp .signin { float:right; margin-left:20px; line-height:60px; margin:0 20px; }
 .header .warp .signin a.ax { color:#fff !important; font-size:15px; margin:0 10px; }
 .header .warp .users { float:right; line-height:60px; max-width:200px; text-align:right;  }
@@ -238,7 +242,7 @@ a { text-decoration:none; }
 .sign .warp .input .textfiled .msg { height:22px; }
 .sign .warp .input .textfiled span { font-size:12px; color:red; line-height:22px;  }
 
-.search-bar { width:1160px; margin:0 auto; position:absolute; top:68px; left:0; right:0; z-index:999;  }
+.search-bar { width:800px; margin:0 auto; position:absolute; top:68px; left:0; right:0; z-index:999;  }
 .search-bar .bar {  line-height:70px;  margin:0 auto;  }
 .search-bar .bar .wrp { width:376px; margin:10px auto; box-shadow: 0 3px 3px #999; border-radius:20px; overflow:hidden; border:1px solid #ccc; }
 .search-bar .bar .wrp .kk {  outline:none; border:none; float:left; font-size:13px; height:40px; padding-left:16px; width:300px;  }

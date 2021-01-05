@@ -146,8 +146,7 @@ function alertShare() {
         btnAlign: 'c',
         moveType: 1,//拖拽模式，0或者1
 
-        content:
-            '<div id="layuiMy">' +
+        content:  '<div id="layuiMy">' +
             '<form class="layui-form">'+
             '<div class="layui-form-item">' +
             '    <label class="layui-form-label">标题/歌曲名/专辑名</label>' +
@@ -175,6 +174,7 @@ function alertShare() {
             '            })' +
             '</script>',
 
+            
         success: function (layero, index) {
 
 

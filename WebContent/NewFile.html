@@ -1,0 +1,96 @@
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>生成二维码</title>
+        都需要引入jQuery.js文件
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+            
+        引入上边一个文件（jquery.qrcode.min.js）或者引入下边两个文件（jquery.qrcode.js和qrcode.js）
+        
+        <script src="js/qrcode/jquery.qrcode.js"></script>
+        <script src="js/qrcode/qrcode.js"></script>
+        <style>
+        body{
+            text-align: center;
+        }
+        #qrcode{
+            margin:100px auto;
+        }
+        #text{
+            width: 400px;height: 200px;
+            border:1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+        <input type="text" id="text" placeholder="请输入要生成二维码的文本">
+        <input type="button" id="create" value="生成二维码">
+        <br>
+        <div id="qrcode"></div>
+        <script type="text/javascript">
+            $('#create').click(function(){
+                    $('#qrcode').html('').qrcode({
+                        text: $('#text').val()
+                    });
+            })
+        </script>
+    </body>
+</html> -->
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+    <title>Zero Clipboard Test</title>
+   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript"> 
+    function generateQRCode(rendermethod, picwidth, picheight, url) {
+    $("#qrcode").qrcode({ 
+            render: rendermethod, // 渲染方式有table方式（IE兼容）和canvas方式
+            width: picwidth, //宽度 
+            height:picheight, //高度 
+            text: utf16to8(url), //内容 
+            typeNumber:-1,//计算模式
+            correctLevel:2,//二维码纠错级别
+            background:"#ffffff",//背景颜色
+            foreground:"#000000"  //二维码颜色
+
+        });
+    }
+    function init() {
+        generateQRCode("table",200, 200, 'ss');
+    }
+        //中文编码格式转换
+    function utf16to8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }   
+
+    </script>
+</head>
+<body onLoad="init()">
+    <button >Qrcode</button>
+    <div id="qrcode"></div>
+</body>
+</html>

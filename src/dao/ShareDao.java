@@ -1,6 +1,7 @@
 package dao;
 
 import common.util.DBHelper;
+import common.util.DBHelper.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,4 +117,56 @@ public class ShareDao {
 		return DBHelper.selectListMap(sql);
 	}
 
+	
+	/**
+	 * download页点击分享按钮
+	 * 往分享表中添加数据
+	 * @throws SQLException 
+	 */
+	
+	public void insertshare(String songname,String singername,String format,int heat,String download,String uname) throws SQLException {
+		String sql="insert into sq_share values(null,"
+												+ "?,"
+												+ "?,"
+												+ "null,"
+												+ "null,"
+												+ "null,"
+												+ "?,"
+												+ "null,"
+												+ "?,"
+												+ "?,"
+												+ "?,"
+												+ "now(),"
+												+ "null)";
+		DBHelper dbh=new DBHelper();
+		dbh.update(sql, songname,singername,format,heat,download,uname);
+	}
+	/**
+	 * 判断某一个用户是否多次分享同一个歌手的同一首歌
+	 * @param singername
+	 * @param songname
+	 * @param uname
+	 * @return
+	 * @throws SQLException
+	 */
+	public int selectcnt(String singername,String songname,String uname) throws SQLException {
+		String sql="SELECT\n" +
+				"	count(*) cnt\n" +
+				"FROM\n" +
+				"	sq_share\n" +
+				"WHERE\n" +
+				"	member = ?\n" +
+				"AND singers = ?\n" +
+				"AND NAME = ?";
+		DBHelper dbh=new DBHelper();
+		List<Integer> list=dbh.selectList(sql, new  ResultSetMapper<Integer>() {
+
+			@Override
+			public Integer map(ResultSet rs) throws SQLException {
+				return rs.getInt(1);
+			}
+		}, uname,singername,songname);
+		return list.get(0);
+	}
+	
 }

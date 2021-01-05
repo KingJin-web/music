@@ -7,10 +7,10 @@ import java.util.Map;
 import common.util.DBHelper;
 import common.util.DBHelper.ResultSetMapper;
 
-public class ZanDao {
+public class CaiDao {
 
 	public void zanadd(String uname,String singername) throws SQLException {
-		String sql="insert into sq_zan values(null,?,?,now())";
+		String sql="insert into sq_cai values(null,?,?,now())";
 		DBHelper dbh=new DBHelper();
 		dbh.update(sql,uname,singername);
 	}
@@ -24,7 +24,7 @@ public class ZanDao {
 				"			count(*) cnt,\n" +
 				"			singername\n" +
 				"		FROM\n" +
-				"			sq_zan\n" +
+				"			sq_cai\n" +
 				"		GROUP BY\n" +
 				"			singername\n" +
 				"	) c\n" +
@@ -42,7 +42,7 @@ public class ZanDao {
 	 * @throws SQLException
 	 */
 	public int getcnt(String singername,String name) throws SQLException {
-		String sql="select count(*) cnt from sq_zan where singername=? and uname=?";
+		String sql="select count(*) cnt from sq_cai where singername=? and uname=?";
 		DBHelper dbh=new DBHelper();
 		List<Integer> list=dbh.selectList(sql, new  ResultSetMapper<Integer>() {
 
@@ -58,7 +58,7 @@ public class ZanDao {
 	public void qxzan(String uname, String singername) throws SQLException {
 		String sql="DELETE \n" +
 				"FROM\n" +
-				"	sq_zan\n" +
+				"	sq_cai\n" +
 				"WHERE\n" +
 				"	singername = ?\n" +
 				"AND uname = ?";

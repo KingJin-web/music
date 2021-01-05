@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type='text/javascript' src='layui/layui.all.js'></script>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,7 +18,7 @@
 	<meta name="applicable-device" content="pc">
 	<meta name="mobile-agent" content="format=html5;url=download.html">
 	<link rel="alternate" media="only screen and(max-width: 800px)" href="download.html">
-	<title>无损音乐下载_FLAC_WAV_APE_DSD_SQ688_超高无损音乐</title>
+	<title>网愈云音乐</title>
 	<meta name="keywords" content="毛不易,不染,无损音乐下载,FLAC,WAV,APE,SQ688超高无损音乐">
 	<link rel="stylesheet" type="text/css" href="res/main.css">
 	<link rel="stylesheet" type="text/css" href="res/font-awesome.css">
@@ -25,11 +27,12 @@
 <div id="header" class="header">
 	<div class="warp">
 		<div class="logo">
-			<h1>超高无损音乐</h1>
+			<h1>网愈云音乐</h1>
 		</div>
-
+		<div class="users"><a href="member.html"><i class="fa fa-sign-in"></i>我的主页</a></div>
 		<div class="users">
-			<a href="https://www.sq688.com/login"><i class="fa fa-sign-in"></i> 登录</a> / <a href="https://www.sq688.com/register"><i class="fa fa-registered"></i> 注册</a>
+			<a href="login.html"><i class="fa fa-sign-in"></i> 登录</a> / 
+			<a href="register.html"><i class="fa fa-registered"></i> 注册</a>/
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -53,7 +56,33 @@
 		<div class="url">
 				<span class="down_title">{{list[0].singer}} - {{list[0].name}}
 				({{list[0].size}}) {{list[0].type}} 无损音乐下载地址:</span><br>
-			<p v-html="list[0].bofang_url" ></p>
+			<p  ><span v-html="list[0].bofang_url"></span>	
+			<div class="layui-btn-group" >
+			  <!-- 添加收藏 -->
+			  <button type="button" @click="but1()" class="layui-btn layui-btn-sm">
+			    <i class="layui-icon" v-html="button1"></i><!-- v-html="but1" -->
+			  </button>
+			  <!-- 买歌 -->
+			  <button type="button" class="layui-btn layui-btn-sm" @click="but2(list[0].money)">{{list[0].money}}
+			    <i class="layui-icon">&#xe601;</i>
+			  </button>
+			  <!-- 分享 -->
+			  <button type="button" @click="but3()" class="layui-btn layui-btn-sm">
+			    <i class="layui-icon">&#xe641;</i>
+			  </button>
+			  <!-- 刷新 -->
+			  <button type="button" @click="but4()" class="layui-btn layui-btn-sm">
+			    <i class="layui-icon">&#xe669;</i>
+			  </button>
+			  <!-- 留言 -->
+			  <button type="button"  class="layui-btn layui-btn-sm">{{listlytotal[0].cnt}}
+			    <i class="layui-icon">&#xe63a;</i>
+			  </button>
+			</div>
+			</p>
+			
+			
+			
 			<span class="downurl">{{list[0].down_url}}</span>
 
 			<div class="ips">
@@ -67,8 +96,45 @@
 			<span class="tips">温馨提示: 请直接点击打开下载链接,密码会自动复制</span>
 			<div class="clear"></div>
 		</div>
+		
+		
+		<div class="url">
+					<div class="head">
+						<i class="leline"></i>网友评论
+					</div>
+					<form action="" id="ly">
+					<div id="comment" class="comment">
+						
+						<div class="message">
+							<textarea v-model="content" id="message" placeholder="请填写您的评论"></textarea>
+							<input id="sid" type="hidden" value="3">
+						</div>
+						 <button type="button" @click="but6()" class="layui-btn layui-btn-sm">
+			   			 <i class="layui-icon">&#xe642;</i>
+			  </button>
+					</div>
+					</form>
+					<div class="head">
+						<i class="leline"></i>精彩评论
+					</div>
+					<template v-for="s in listly">
+					<div class="comment-list" >
+						<div class="items">
+							<div class="i-left">
+								<a href="member.html"><img  :src="s.head" class="avt2" ></a>
+								<h3>{{s.nickname}}</h3>
+							</div>
+							<div class="i-right">
+								<h4>发表于{{s.ly_time}}</h4>
+								<div class="msg">{{s.content}}</div>
+							</div>
+						</div>
+		
+					</div>
+					</template>
+				
+				</div>
 	</div>
-
 	<div class="list-warp" style="min-height: 340px;">
 		<h1>
 			<span>近期收录</span>
@@ -88,7 +154,11 @@
 		el:".download",
 		data:{
 			list:[],
-			listzjsl:[]
+			listzjsl:[],
+			button1:"&#xe68c;",
+			content:"",
+			listly:[],
+			listlytotal:[],
 		},
 		created(){
 			var search = location.search; // ?page=1;
@@ -103,12 +173,81 @@
 							alert("哎呀··！！小妹找不到相关歌曲");
 							location.href="index.html";
 						}
-
 					});
 			axios.post("detail.s?op=querydownloadzxsl")
 					.then(res=>{
 						this.listzjsl=res.data;
 					});
+		 	axios.get("downloadbutton.s?op=querycnt&singername="+name+"&songname="+location.hash.substring(1)).then(res=>{
+				if(res.data>=1){
+					this.button1="&#xe68f;";
+				}
+			}); 
+		 	axios.get("detail.s?op=queryly&singername="+name+"&songname="+location.hash.substring(1)).then(res=>{
+				this.listly=res.data;
+			}); 
+			axios.get("detail.s?op=querylycnt&singername="+name+"&songname="+location.hash.substring(1)).then(res=>{
+				this.listlytotal=res.data;
+			}); 
+		},
+		methods:{
+			but1(){
+				var p=new URLSearchParams();
+				p.append("singername",this.list[0].singer);
+				p.append("songname",this.list[0].name);
+				p.append("bofang_url",this.list[0].bofang_url)
+				axios.post("downloadbutton.s?op=addcsinfo",p).then(res=>{
+					if(res.data=="收藏成功"){
+						this.button1="&#xe68f;";
+					}else{
+						alert(res.data);
+					}
+					
+				});
+			},
+			but2:function(date){
+				var data=date.substring(0,date.length-1);
+				var p=new URLSearchParams();
+				p.append("singername",this.list[0].singer);
+				p.append("songname",this.list[0].name);
+				p.append("money",data);
+				axios.post("songspay.do?op=buysongs",p).then(res=>{
+					if(res.data=="成功"){
+					location.href = "http://localhost:8080/C91-S2-XM/buyorder/confirm?money="+data;
+					}else{
+						alert(res.data);
+					}
+				});			
+			},
+			but3(){
+				var p=new URLSearchParams();
+				p.append("singername",this.list[0].singer);
+				p.append("songname",this.list[0].name);
+				p.append("format",this.list[0].type);
+				p.append("heat",this.list[0].heat);
+				p.append("download",this.list[0].down_url);
+				axios.post("downloadbutton.s?op=addshare",p).then(res=>{
+					alert(res.data);
+				});
+			},
+			but4(){
+				window.location.reload();
+				//this.$route.go(0);
+			},
+			but6(){
+				var p=new URLSearchParams();
+				p.append("singername",this.list[0].singer);
+				p.append("songname",this.list[0].name);
+				p.append("content",this.content);
+				axios.post("detail.s?op=addly",p).then(res=>{
+					if(res.data=="留言成功！！！"){
+						alert(res.data);
+						window.location.reload();
+					}else{
+						alert(res.data);
+					}
+				});
+			},
 		}
 	});
 

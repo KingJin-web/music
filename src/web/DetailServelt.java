@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import  biz.LyBiz;
 import  dao.DetailDao;
-import  dao.DownLoadDao;
-import  dao.LyDao;
-import  dao.SearchDao;
+import dao.DownLoadDao;
+import dao.LyDao;
+import dao.SearchDao;
 import  common.biz.BizException;
 import  common.web.BaseServlet;
 
@@ -61,10 +61,12 @@ public class DetailServelt  extends BaseServlet{
 		}
 	}
 	public void addly(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String name=request.getParameter("name");
+		String singername=request.getParameter("singername");
+		String songname=request.getParameter("songname");
 		String content=request.getParameter("content");
+		String uname = (String) request.getSession().getAttribute("name");
 		try {
-			lb.insertly(name, content);
+			lb.insertly(singername, songname, uname, content);
 			response.getWriter().append("留言成功！！！");
 		} catch (BizException e) {
 			response.getWriter().append("登录失败！！！ 原因:"+e.getMessage());
@@ -72,8 +74,25 @@ public class DetailServelt  extends BaseServlet{
 	}
 	
 	public void queryly(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String singername=request.getParameter("singername");
+		String songname=request.getParameter("songname");
 		try {
-			write(response, ld.listly());
+			write(response, ld.listly(singername, songname));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 某一个歌手某一首歌的所有留言数
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	public void querylycnt(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String singername=request.getParameter("singername");
+		String songname=request.getParameter("songname");
+		try {
+			write(response, ld.listlycnt(singername, songname));
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -116,6 +135,8 @@ public class DetailServelt  extends BaseServlet{
 		try {
 			List<Map<String, Object>> list=sd.listname(name);
 			list.addAll(sd.listsong(name));
+			list.addAll(sd.listnamepy(name));
+			list.addAll(sd.listsongpy(name));
 			write(response, list);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
