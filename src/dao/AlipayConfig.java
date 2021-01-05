@@ -30,12 +30,12 @@ public class AlipayConfig {
 
 
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 http://localhost:8080/notify
-    public static String notify_url = "http://localhost:9999/C91-S2-XM/notify";
+    public static String notify_url = "http://www.wuzhaoqi.top:8080/C91-S2-XM/notify";
 
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String return_url = "http://localhost:9999/C91-S2-XM/Recharge.html";
+    public static String return_url = "http://www.wuzhaoqi.top:8080/C91-S2-XM/Recharge.html";
 
-    // 签名方式
+    // 签名方式 http://www.wuzhaoqi.top:8080/
     public static String sign_type = "RSA2";
 
     // 字符编码格式

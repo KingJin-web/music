@@ -206,7 +206,7 @@
 				p.append("money",data);
 				axios.post("songspay.do?op=buysongs",p).then(res=>{
 					if(res.data=="成功"){
-					location.href = "http://localhost:9999/C91-S2-XM/buyorder/confirm?money="+data;
+					location.href = "http://www.wuzhaoqi.top:8080/C91-S2-XM/buyorder/confirm?money="+data;
 					}else{
 						alert(res.data);
 					}
