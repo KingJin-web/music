@@ -132,6 +132,14 @@ function alertSave2(text) {
     }
 }
 
+function returnLogin() {
+    var url = "user.do?op=returnLogin"
+    axios.get(url).then(ret => {
+        alertMy(ret.data);
+        window.location.href = "login.html";
+    });
+}
+
 function aaa() {
     layer.open({
         type: 1,
@@ -277,15 +285,28 @@ function changePwd() {
 
 function alertAdv4() {
     layer.open({
-        type: 1,
-        shade: false,
-        title: false, //不显示标题
+        type: 1
+        ,
+        title: false //不显示标题栏
+        ,
+        closeBtn: false
+        ,
+        area: '300px;'
+        ,
+        shade: 0.8
+        ,
+
+        resize: false
+        ,
+        btn: ['火速围观', '残忍拒绝']
+        ,
+        btnAlign: 'c'
+        ,
+        moveType: 1 //拖拽模式，0或者1
+        ,
         content: '\t\t<h1>安卓,苹果,Mac,Windows 好用的加速器</h1>\n' +
             '\t\t<h3>刷INS、访推特，完美支持高清1080P视频，无任何流量限制,真正免费的加速器</h3>\n' +
             '\t\t<a href="https://invited.antss002.com/aff/uXAP">立即前往</a>', //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-        cancel: function () {
-            layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon: 6});
-        }
     });
 }
 
@@ -309,21 +330,20 @@ function alertMyVip() {
 function alertAdv3() {
 
     layer.open({
-        type: 0
+        type: 1
         ,
         title: false //不显示标题栏
         ,
         closeBtn: false
         ,
-        area: '200px;'
+        area: '300px;'
         ,
-        shade: 0
+        shade: 0.8
         ,
-        id: 'LAY_layuipro1' //设定一个id，防止重复弹出
-        ,
+
         resize: false
         ,
-        btn: ['前去', '残忍拒绝']
+        btn: ['火速围观', '残忍拒绝']
         ,
         btnAlign: 'c'
         ,
@@ -344,26 +364,22 @@ function alertAdv3() {
 
 //左上角弹广告
 function alertAdv2() {
-    console.log("====================\n===== 这是广告 会员看不到的======================\n=======");
 
     layer.open({
-        type: 0
+        type: 1
         ,
-        offset: 'lt',
-
-        title: '广告' //不显示标题栏
+        title: false //不显示标题栏
         ,
         closeBtn: false
         ,
-        area: '200px;'
+        area: '300px;'
         ,
-        shade: 0.1
+        shade: 0.8
         ,
-        id: 'LAY_layuipro1' //设定一个id，防止重复弹出
-        ,
+
         resize: false
         ,
-        btn: ['前去充值', '残忍拒绝']
+        btn: ['火速围观', '残忍拒绝']
         ,
         btnAlign: 'c'
         ,
@@ -396,8 +412,7 @@ function alertAdv1() {
         ,
         shade: 0.8
         ,
-        id: 'LAY_layuipro' //设定一个id，防止重复弹出
-        ,
+
         resize: false
         ,
         btn: ['火速围观', '残忍拒绝']
