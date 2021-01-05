@@ -216,7 +216,7 @@ public class UserServlet extends BaseServlet {
     public void timeSF(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String time = req.getParameter("time");
         if(time.equals(null) ||time.equals("undefined")|| time.isEmpty()) {
-        	 write(resp, "您没冲过会员");
+        	 write(resp, "您没有充值过会员");
         }else {
         	  write(resp, parse_date(time, false));
         }

@@ -10,10 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDao {
-
     public void register(SqMember sqMember) throws SQLException {
 
-        String sql = "insert into sq_member value (null,?,?,?,null,?,null,null,null,null,now()) ";
+        String sql = "insert into sq_member value (null,?,?,?,null,?,null,null,null,null,now(),null) ";
         DBHelper.update(sql, sqMember.getName(), Utils.generateName(),
                 sqMember.getPwd(), sqMember.getEmail());
     }

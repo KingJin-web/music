@@ -23,6 +23,7 @@ public class UserBiz {
             userDao.register(sqMember);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new BizException("系统故障");
         }
 
     }
